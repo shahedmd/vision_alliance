@@ -1,0 +1,39 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "vision-alliance",
+          "appId": "1:805095618455:android:d0d1c3247fb9c4f800b6d2",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "vision-alliance",
+          "configurations": {
+            "android": "1:805095618455:android:d0d1c3247fb9c4f800b6d2",
+            "ios": "1:805095618455:ios:597b716ba05d66de00b6d2",
+            "macos": "1:805095618455:ios:597b716ba05d66de00b6d2",
+            "web": "1:805095618455:web:2d795dd8011c5e1b00b6d2",
+            "windows": "1:805095618455:web:da72517717e4f8db00b6d2"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
