@@ -1,9 +1,4 @@
-# vision_alliance
-<<<<<<< HEAD
-This is a flutter website for an electrical and electronics products sell &amp; service company.
-=======
-
-A new Flutter project.
+This is a flutter website for an electrical and electronics products sell & service company.
 
 ## Getting Started
 
@@ -17,4 +12,3 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
->>>>>>> dfa4109 (vision landing page done/first commit)

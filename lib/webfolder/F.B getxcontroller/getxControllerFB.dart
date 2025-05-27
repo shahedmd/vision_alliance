@@ -3,19 +3,21 @@
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vision_alliance/Produts%20Models/homepagemodel.dart';
+import 'package:vision_alliance/Produts%20Models/ourservicemodel.dart';
 
 class GetxControllerForfirebase extends GetxController {
   final RxList<String> imageUrls = <String>[].obs;
   final RxBool homepageProdutsLoading = false.obs;
-      var productList = <Homepagemodel>[].obs;
-
+  var productList = <Homepagemodel>[].obs;
+  var electronics = <Ourservicemodel>[].obs;
+  final RxBool oSelectronics = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchImageUrls();
     homepageProductsFetch();
-
+    getElectronics();
   }
 
   Future<void> fetchImageUrls() async {
@@ -53,10 +55,28 @@ class GetxControllerForfirebase extends GetxController {
           }).toList();
     } catch (e) {
       print(e.toString());
-      
+
       return [];
-    } finally{
+    } finally {
       homepageProdutsLoading.value = false;
+    }
+  }
+
+  Future<List<Ourservicemodel>> getElectronics() async {
+    oSelectronics.value = true;
+    try {
+      QuerySnapshot snapshot =
+          await FirebaseFirestore.instance.collection("OSelectronics").get();
+      return electronics.value =
+          snapshot.docs.map((doc) {
+            final data = doc.data() as Map<String, dynamic>;
+            return Ourservicemodel.fromFiresotre({...data});
+          }).toList();
+    } catch (e) {
+      print(e.toString());
+      return [];
+    } finally {
+      oSelectronics.value = false;
     }
   }
 }

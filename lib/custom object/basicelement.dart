@@ -9,6 +9,17 @@ import '../webfolder/F.B getxcontroller/getxControllerFB.dart';
 
 final green = Color.fromARGB(255, 0, 124, 62);
 
+RxBool isHover = false.obs;
+RxBool isEnter = false.obs;
+RxBool isHoverourBusiness = false.obs;
+RxBool isEnterourBusiness = false.obs;
+RxBool isHoverourProducts = false.obs;
+RxBool isEnterourProducts = false.obs;
+
+void onHoverd(RxBool boolValue) {
+  boolValue.value = true;
+}
+
 class AnimatedCounterOnScroll extends StatefulWidget {
   final int targetNumber;
   final String label;
@@ -154,16 +165,65 @@ Widget menubar() {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         cusText("Vison Alliance LTD", green, 22, FontWeight.bold),
-        SizedBox(width: 170.w),
-        cusText("Our Products", Colors.black, 16, FontWeight.bold),
+        SizedBox(width: 120.w),
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (_) => onHoverd(isEnter),
+          onExit: (_) {
+            Future.delayed(const Duration(milliseconds: 300), () {
+              if (!isHover.value) {
+                isEnter.value = false;
+              }
+            });
+          },
+          child: SizedBox(
+            height: 70.h,
+            child: Center(
+              child: cusText("About Us", Colors.black, 16, FontWeight.bold),
+            ),
+          ),
+        ),
         SizedBox(width: 70.w),
-        cusText("Our Services", Colors.black, 16, FontWeight.bold),
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (_) => onHoverd(isEnterourBusiness),
+          onExit: (_) {
+            Future.delayed(const Duration(milliseconds: 300), () {
+              if (!isHoverourBusiness.value) {
+                isEnterourBusiness.value = false;
+              }
+            });
+          },
+          child: SizedBox(
+            height: 70.h,
+            child: Center(child: cusText("Our Business", Colors.black, 16, FontWeight.bold)),
+          ),
+        ),
         SizedBox(width: 70.w),
-        cusText("Portfolio", Colors.black, 16, FontWeight.bold),
+        InkWell(
+          child: cusText("Our Services", Colors.black, 16, FontWeight.bold),
+        ),
         SizedBox(width: 70.w),
-        cusText("About Us", Colors.black, 16, FontWeight.bold),
+
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (_) => onHoverd(isEnterourProducts),
+          onExit: (_) {
+            Future.delayed(const Duration(milliseconds: 300), () {
+              if (!isHoverourProducts.value) {
+                isEnterourProducts.value = false;
+              }
+            });
+          },
+          child: SizedBox(
+            height: 70.h,
+            child: Center(child: cusText("Our Products", Colors.black, 16, FontWeight.bold)),
+          ),
+        ),
         SizedBox(width: 70.w),
-        cusText("Login", Colors.black, 16, FontWeight.bold),
+        InkWell(child: cusText("PortFolio", Colors.black, 16, FontWeight.bold)),
+        SizedBox(width: 70.w),
+        InkWell(child: cusText("Login", Colors.black, 16, FontWeight.bold)),
       ],
     ),
   );
@@ -764,13 +824,11 @@ Widget bottomNavbar() {
         SizedBox(height: 20.h),
 
         Padding(
-          padding:  EdgeInsets.only(left: 100.w),
+          padding: EdgeInsets.only(left: 100.w),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              
               SizedBox(
-               
                 width: 400.w,
                 child: TextFormField(
                   validator: (value) {
@@ -792,10 +850,213 @@ Widget bottomNavbar() {
                   ),
                 ),
               ),
-              SizedBox(width: 30.w,),
+              SizedBox(width: 30.w),
 
-              cusButton("SUBSCRIBE", Colors.white)
+              cusButton("SUBSCRIBE", Colors.white),
             ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget submenuElements(List<Widget> widgets, double height) {
+  return Container(
+    height: height.h,
+    padding: EdgeInsets.all(40.r),
+    decoration: BoxDecoration(
+      color: Colors.green.shade200,
+      borderRadius: BorderRadius.all(Radius.circular(10.r)),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: widgets,
+    ),
+  );
+}
+
+Widget submenu() {
+  return SizedBox(
+    width: double.infinity,
+
+    child: Stack(
+      children: [
+        Positioned(
+          child: MouseRegion(
+            onEnter: (_) => isHover.value = true,
+            onExit: (_) {
+              Future.delayed(const Duration(milliseconds: 300), () {
+                isHover.value = false;
+                isEnter.value = false;
+              });
+            },
+            child: Obx(
+              () => AnimatedSlide(
+                duration: const Duration(milliseconds: 300),
+                offset:
+                    isEnter.value ? const Offset(0, 0) : const Offset(0, -0.05),
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 300),
+                  opacity: isEnter.value ? 1.0 : 0.0,
+                  child: Visibility(
+                    visible: isEnter.value,
+                    child: submenuElements([
+                      cusText(
+                        "Company Profile",
+                        Colors.black,
+                        15,
+                        FontWeight.w800,
+                      ),
+                      SizedBox(height: 20.h),
+                      cusText(
+                        "Board Of Directors",
+                        Colors.black,
+                        15,
+                        FontWeight.w800,
+                      ),
+                      SizedBox(height: 20.h),
+                      cusText(
+                        "Chairman's Message",
+                        Colors.black,
+                        15,
+                        FontWeight.w800,
+                      ),
+                      SizedBox(height: 20.h),
+                      cusText(
+                        "Vision, Mission & Values",
+                        Colors.black,
+                        15,
+                        FontWeight.w800,
+                      ),
+                      SizedBox(height: 20.h),
+                      cusText(
+                        "Quality Policy",
+                        Colors.black,
+                        15,
+                        FontWeight.w800,
+                      ),
+                    ], 310),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        Positioned(
+          left: 142.w,
+          child: MouseRegion(
+            onEnter: (_) => isHoverourBusiness.value = true,
+            onExit: (_) {
+              Future.delayed(const Duration(milliseconds: 300), () {
+                isHoverourBusiness.value = false;
+                isEnterourBusiness.value = false;
+              });
+            },
+            child: Obx(
+              () => AnimatedSlide(
+                duration: const Duration(milliseconds: 300),
+                offset:
+                    isEnterourBusiness.value
+                        ? const Offset(0, 0)
+                        : const Offset(0, -0.05),
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 300),
+                  opacity: isEnterourBusiness.value ? 1.0 : 0.0,
+                  child: Visibility(
+                    visible: isEnterourBusiness.value,
+                    child: submenuElements([
+                      cusText("Electronics", Colors.black, 15, FontWeight.w800),
+                      SizedBox(height: 20.h),
+                      cusText("Electrical", Colors.black, 15, FontWeight.w800),
+                      SizedBox(height: 20.h),
+                      cusText("Sub-Station", Colors.black, 15, FontWeight.w800),
+                      SizedBox(height: 20.h),
+                      cusText("Power Plant", Colors.black, 15, FontWeight.w800),
+                      SizedBox(height: 20.h),
+                      cusText(
+                        "Lab Equipment",
+                        Colors.black,
+                        15,
+                        FontWeight.w800,
+                      ),
+                      SizedBox(height: 20.h),
+                      cusText(
+                        "Lightning Resistance",
+                        Colors.black,
+                        15,
+                        FontWeight.w800,
+                      ),
+                      SizedBox(height: 20.h),
+                      cusText("IT Support", Colors.black, 15, FontWeight.w800),
+                    ], 410),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        Positioned(
+          left: 470.w,
+          child: MouseRegion(
+            onEnter: (_) => isHoverourProducts.value = true,
+            onExit: (_) {
+              Future.delayed(const Duration(milliseconds: 300), () {
+                isHoverourProducts.value = false;
+                isEnterourProducts.value = false;
+              });
+            },
+            child: Obx(
+              () => AnimatedSlide(
+                duration: const Duration(milliseconds: 300),
+                offset:
+                    isEnterourProducts.value
+                        ? const Offset(0, 0)
+                        : const Offset(0, -0.05),
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 300),
+                  opacity: isEnterourProducts.value ? 1.0 : 0.0,
+                  child: Visibility(
+                    visible: isEnterourProducts.value,
+                    child: submenuElements([
+                      cusText(
+                        "Electronics Goods",
+                        Colors.black,
+                        15,
+                        FontWeight.w800,
+                      ),
+                      SizedBox(height: 20.h),
+                      cusText(
+                        "Electrical Goods",
+                        Colors.black,
+                        15,
+                        FontWeight.w800,
+                      ),
+                      SizedBox(height: 20.h),
+                      cusText(
+                        "Sub-Station Equipment",
+                        Colors.black,
+                        15,
+                        FontWeight.w800,
+                      ),
+                      SizedBox(height: 20.h),
+                      cusText(
+                        "Power Plant Equipment",
+                        Colors.black,
+                        15,
+                        FontWeight.w800,
+                      ),
+                      SizedBox(height: 20.h),
+                      cusText("Computer", Colors.black, 15, FontWeight.w800),
+                      SizedBox(height: 20.h),
+                      cusText("IT Support", Colors.black, 15, FontWeight.w800),
+                    ], 370),
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ],
