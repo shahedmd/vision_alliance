@@ -3,17 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vision_alliance/firebase_options.dart';
+import 'package:vision_alliance/portfolio.dart';
+import 'package:vision_alliance/webfolder/aboutus/chairmans.dart';
+import 'package:vision_alliance/webfolder/aboutus/vmv.dart';
+import 'package:vision_alliance/webfolder/ourserver.dart';
 import 'package:vision_alliance/webfolder/webhomepage.dart';
 import './mobilescreen/mobilehomepage.dart';
 
 
-void main () async{
-   WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyApp(),
+    ),
+  );
 }
+
+
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -61,7 +72,7 @@ class _MyAppState extends State<MyApp> {
               return const MobileHomePage();
             }
 
-            return const Webhomepage();
+            return const PortfolioList();
           },
         ));
   }

@@ -2,5 +2,5 @@ import 'package:flutter/material.dart';
 
 
 Widget techTraining(){
-  return Text("Technical Trainig");
+  return Center(child: Text("Technical Trainig"));
 }

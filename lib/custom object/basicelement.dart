@@ -1,10 +1,26 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, non_constant_identifier_names, avoid_print
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:get/get.dart';
+import 'package:vision_alliance/custom%20object/menuhovercontroller.dart';
+import 'package:vision_alliance/webfolder/Our%20Business/electrical.dart';
+import 'package:vision_alliance/webfolder/Our%20Business/electronics.dart';
+import 'package:vision_alliance/webfolder/Our%20Business/labequipment.dart';
+import 'package:vision_alliance/webfolder/Our%20Business/powerplant.dart';
+import 'package:vision_alliance/webfolder/Our%20Business/substation.dart';
+import 'package:vision_alliance/webfolder/aboutus/bod.dart';
+import 'package:vision_alliance/webfolder/aboutus/chairmans.dart';
+import 'package:vision_alliance/webfolder/aboutus/companyprofile.dart';
+import 'package:vision_alliance/webfolder/aboutus/vmv.dart';
+import 'package:vision_alliance/webfolder/our%20products/p&s.dart';
+import 'package:vision_alliance/webfolder/our%20products/computer.dart';
+import 'package:vision_alliance/webfolder/our%20products/electrical.dart';
+import 'package:vision_alliance/webfolder/our%20products/electronics.dart';
+import 'package:vision_alliance/webfolder/ourserver.dart';
+import 'package:vision_alliance/webfolder/webhomepage.dart';
 import '../webfolder/F.B getxcontroller/getxControllerFB.dart';
 
 final green = Color.fromARGB(255, 0, 124, 62);
@@ -117,6 +133,18 @@ Widget cusButton(String input, Color color) {
   );
 }
 
+Widget cusButton2(String input, Color color) {
+  return Container(
+    height: 70.h,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.all(Radius.circular(7.r)),
+    ),
+    width: 150.w,
+    child: Center(child: cusText(input, color, 18, FontWeight.w800)),
+  );
+}
+
 Widget animatedCounter({
   required int targetNumber,
   required String label,
@@ -146,85 +174,112 @@ Widget animatedCounter({
 }
 
 Widget menubar() {
+  final controller = Get.put(MenuHoverController());
+
   return Container(
     decoration: BoxDecoration(
-      color: Colors.white.withOpacity(1),
+      color: Colors.white,
       boxShadow: [
         BoxShadow(
           color: Colors.grey.withOpacity(0.5),
           spreadRadius: 2,
           blurRadius: 5,
-          offset: Offset(0, 3),
+          offset: const Offset(0, 3),
         ),
       ],
     ),
     height: 130.h,
-
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        cusText("Vison Alliance LTD", green, 22, FontWeight.bold),
-        SizedBox(width: 120.w),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onEnter: (_) => onHoverd(isEnter),
-          onExit: (_) {
-            Future.delayed(const Duration(milliseconds: 300), () {
-              if (!isHover.value) {
-                isEnter.value = false;
-              }
-            });
-          },
-          child: SizedBox(
-            height: 70.h,
-            child: Center(
-              child: cusText("About Us", Colors.black, 16, FontWeight.bold),
-            ),
-          ),
-        ),
-        SizedBox(width: 70.w),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onEnter: (_) => onHoverd(isEnterourBusiness),
-          onExit: (_) {
-            Future.delayed(const Duration(milliseconds: 300), () {
-              if (!isHoverourBusiness.value) {
-                isEnterourBusiness.value = false;
-              }
-            });
-          },
-          child: SizedBox(
-            height: 70.h,
-            child: Center(child: cusText("Our Business", Colors.black, 16, FontWeight.bold)),
-          ),
-        ),
-        SizedBox(width: 70.w),
         InkWell(
+          onTap: () => Get.to(() => Webhomepage()),
+          child: cusText(
+            "Vison Alliance LTD",
+            Colors.green,
+            22,
+            FontWeight.bold,
+          ),
+        ),
+        SizedBox(width: 120.w),
+
+        /// About Us
+        hoverMenuItem(
+          title: "About Us",
+          isEnter: controller.isEnterAbout,
+          isHover: controller.isHoverAbout,
+          onTap: () => print("About Us Clicked"),
+        ),
+        SizedBox(width: 70.w),
+
+        /// Our Business
+        hoverMenuItem(
+          title: "Our Business",
+          isEnter: controller.isEnterBusiness,
+          isHover: controller.isHoverBusiness,
+          onTap: () => print("Our Business Clicked"),
+        ),
+        SizedBox(width: 70.w),
+
+        InkWell(
+          onTap: () => Get.to(()=> OurService()),
           child: cusText("Our Services", Colors.black, 16, FontWeight.bold),
         ),
         SizedBox(width: 70.w),
 
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onEnter: (_) => onHoverd(isEnterourProducts),
-          onExit: (_) {
-            Future.delayed(const Duration(milliseconds: 300), () {
-              if (!isHoverourProducts.value) {
-                isEnterourProducts.value = false;
-              }
-            });
-          },
-          child: SizedBox(
-            height: 70.h,
-            child: Center(child: cusText("Our Products", Colors.black, 16, FontWeight.bold)),
-          ),
+        /// Our Products
+        hoverMenuItem(
+          title: "Our Products",
+          isEnter: controller.isEnterProducts,
+          isHover: controller.isHoverProducts,
+          onTap: () => print("Our Products Clicked"),
         ),
         SizedBox(width: 70.w),
-        InkWell(child: cusText("PortFolio", Colors.black, 16, FontWeight.bold)),
+
+        /// PortFolio
+        InkWell(
+          onTap: () => print("Portfolio Clicked"),
+          child: cusText("PortFolio", Colors.black, 16, FontWeight.bold),
+        ),
         SizedBox(width: 70.w),
-        InkWell(child: cusText("Login", Colors.black, 16, FontWeight.bold)),
+
+        /// Login
+        InkWell(
+          onTap: () => print("Login Clicked"),
+          child: cusText("Login", Colors.black, 16, FontWeight.bold),
+        ),
       ],
+    ),
+  );
+}
+
+Widget hoverMenuItem({
+  required String title,
+  required RxBool isEnter,
+  required RxBool isHover,
+  required VoidCallback onTap,
+}) {
+  return MouseRegion(
+    cursor: SystemMouseCursors.click,
+    onEnter: (_) {
+      isEnter.value = true;
+      isHover.value = true;
+    },
+    onExit: (_) {
+      isHover.value = false;
+      Future.delayed(const Duration(milliseconds: 300), () {
+        if (!isHover.value) {
+          isEnter.value = false;
+        }
+      });
+    },
+    child: GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        height: 70.h,
+        child: Center(child: cusText(title, Colors.black, 16, FontWeight.bold)),
+      ),
     ),
   );
 }
@@ -238,8 +293,9 @@ Widget whychooseContainer(String title, String des, String imgUrl) {
       borderRadius: BorderRadius.all(Radius.circular(20.r)),
     ),
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: 30.h),
         Container(
           height: 180.h,
           width: 180.w,
@@ -277,80 +333,58 @@ Widget whychooseContainer(String title, String des, String imgUrl) {
 }
 
 Widget sliderTextonTop(BuildContext context) {
-  return SizedBox(
-    height: 1000.h,
-    width: double.infinity,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.7,
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  cusText("Your Trusted", green, 46, FontWeight.bold),
-                  SizedBox(width: 9.w),
-                  cusText(
-                    "Electrics & Electronics Company",
-                    Colors.white,
-                    46,
-                    FontWeight.bold,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.7,
-          child: cusText("In Bangladesh.", Colors.white, 46, FontWeight.bold),
-        ),
-        SizedBox(height: 10.h),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.7,
-          height: 1.h,
-          color: green,
-        ),
-        SizedBox(height: 20.h),
+  return Column(
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      /// Title Row
+      cusText(
+        "Your Trusted Electrics & Electronics Company ",
+        Colors.white,
+        46,
+        FontWeight.bold,
+      ),
 
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.7,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              cusText(
-                "Vision Alliance is a trusted provider of electrical and electronics services and products in Bangladesh. Since its establishment in 2019, the company has been delivering reliable, high-quality solutions to both public and private sectors. Specializing in government tender-based projects, Vision Alliance works on a wide range of electrical and electronics infrastructure, including elevator and lift systems, generators, substations, and power plant services.",
-                Colors.white,
-                20,
-                FontWeight.w500,
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 20.h),
-        cusText(
-          "Powering the Future, Electrifying the Nation.",
+      /// Subtitle
+      SizedBox(height: 10.h),
+      cusText("In Bangladesh.", green, 46, FontWeight.bold),
+
+      /// Divider Line
+      SizedBox(height: 10.h),
+
+      /// Description Text
+      SizedBox(height: 20.h),
+      SizedBox(
+        width: MediaQuery.of(context).size.width * 0.6,
+        child: cusText(
+          "Vision Alliance is a trusted provider of electrical and electronics services and products in Bangladesh. Since its establishment in 2019, the company has been delivering reliable, high-quality solutions to both public and private sectors. Specializing in government tender-based projects, Vision Alliance works on a wide range of electrical and electronics infrastructure, including elevator and lift systems, generators, substations, and power plant services.",
           Colors.white,
-          22,
-          FontWeight.w800,
+          20,
+          FontWeight.w500,
         ),
-        SizedBox(height: 40.h),
+      ),
 
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.7,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              cusButton("Learn More", Colors.white),
-              SizedBox(width: 30.w),
-              cusText("About Us", green, 20, FontWeight.w700),
-            ],
-          ),
-        ),
-      ],
-    ),
+      /// Slogan
+      SizedBox(height: 20.h),
+      cusText(
+        "Powering the Future, Electrifying the Nation.",
+        Colors.white,
+        22,
+        FontWeight.w800,
+      ),
+
+      /// Buttons
+      SizedBox(height: 40.h),
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          cusButton("Learn More", Colors.white),
+          SizedBox(width: 30.w),
+          cusText("About Us", green, 20, FontWeight.w700),
+        ],
+      ),
+    ],
   );
 }
 
@@ -442,6 +476,8 @@ Widget whyChooseUs() {
     width: double.infinity,
     color: Colors.black,
     child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(height: 60.h),
         cusText("WHY CHOOSE US?", Colors.white, 26, FontWeight.bold),
@@ -501,7 +537,6 @@ Widget ourProducts(
 ) {
   return SizedBox(
     height: 1000.h,
-    width: double.infinity,
     child: Column(
       children: [
         cusText("OUR PRODUCTS", green, 35, FontWeight.bold),
@@ -509,7 +544,8 @@ Widget ourProducts(
         Padding(
           padding: EdgeInsets.only(left: 40.w),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 height: 750.h,
@@ -876,67 +912,90 @@ Widget submenuElements(List<Widget> widgets, double height) {
   );
 }
 
-Widget submenu() {
+Widget submenu(MenuHoverController controller) {
   return SizedBox(
     width: double.infinity,
-
     child: Stack(
       children: [
         Positioned(
           child: MouseRegion(
-            onEnter: (_) => isHover.value = true,
+            onEnter: (_) => controller.isHoverAbout.value = true,
             onExit: (_) {
+              controller.isHoverAbout.value = false;
               Future.delayed(const Duration(milliseconds: 300), () {
-                isHover.value = false;
-                isEnter.value = false;
+                if (!controller.isHoverAbout.value &&
+                    !controller.isEnterAbout.value) {
+                  controller.isEnterAbout.value = false;
+                }
               });
             },
             child: Obx(
               () => AnimatedSlide(
                 duration: const Duration(milliseconds: 300),
                 offset:
-                    isEnter.value ? const Offset(0, 0) : const Offset(0, -0.05),
+                    controller.isEnterAbout.value
+                        ? Offset.zero
+                        : const Offset(0, -0.05),
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 300),
-                  opacity: isEnter.value ? 1.0 : 0.0,
+                  opacity: controller.isEnterAbout.value ? 1.0 : 0.0,
                   child: Visibility(
-                    visible: isEnter.value,
-                    child: submenuElements([
-                      cusText(
-                        "Company Profile",
-                        Colors.black,
-                        15,
-                        FontWeight.w800,
-                      ),
-                      SizedBox(height: 20.h),
-                      cusText(
-                        "Board Of Directors",
-                        Colors.black,
-                        15,
-                        FontWeight.w800,
-                      ),
-                      SizedBox(height: 20.h),
-                      cusText(
-                        "Chairman's Message",
-                        Colors.black,
-                        15,
-                        FontWeight.w800,
-                      ),
-                      SizedBox(height: 20.h),
-                      cusText(
-                        "Vision, Mission & Values",
-                        Colors.black,
-                        15,
-                        FontWeight.w800,
-                      ),
-                      SizedBox(height: 20.h),
-                      cusText(
-                        "Quality Policy",
-                        Colors.black,
-                        15,
-                        FontWeight.w800,
-                      ),
-                    ], 310),
+                    visible: controller.isEnterAbout.value,
+                    child: MouseRegion(
+                      onEnter: (_) => controller.isEnterAbout.value = true,
+                      onExit: (_) {
+                        controller.isEnterAbout.value = false;
+                        Future.delayed(const Duration(milliseconds: 300), () {
+                          if (!controller.isHoverAbout.value &&
+                              !controller.isEnterAbout.value) {
+                            controller.isEnterAbout.value = false;
+                          }
+                        });
+                      },
+                      child: submenuElements([
+                        InkWell(
+                          onTap: () => Get.to(() => Profile()),
+                          child: cusText(
+                            "Company Profile",
+                            Colors.black,
+                            15,
+                            FontWeight.w800,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        InkWell(
+                          onTap: () => Get.to(() => BoD()),
+                          child: cusText(
+                            "Board Of Directors",
+                            Colors.black,
+                            15,
+                            FontWeight.w800,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        InkWell(
+                          onTap: () => Get.to(() => Speech()),
+
+                          child: cusText(
+                            "Chairman's Message",
+                            Colors.black,
+                            15,
+                            FontWeight.w800,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        InkWell(
+                          onTap: () => Get.to(() => VMv()),
+
+                          child: cusText(
+                            "Vision, Mission & Values",
+                            Colors.black,
+                            15,
+                            FontWeight.w800,
+                          ),
+                        ),
+                      ], 280),
+                    ),
                   ),
                 ),
               ),
@@ -947,50 +1006,105 @@ Widget submenu() {
         Positioned(
           left: 142.w,
           child: MouseRegion(
-            onEnter: (_) => isHoverourBusiness.value = true,
+            onEnter: (_) => controller.isHoverBusiness.value = true,
             onExit: (_) {
+              controller.isHoverBusiness.value = false;
               Future.delayed(const Duration(milliseconds: 300), () {
-                isHoverourBusiness.value = false;
-                isEnterourBusiness.value = false;
+                if (!controller.isHoverBusiness.value &&
+                    !controller.isEnterBusiness.value) {
+                  controller.isEnterBusiness.value = false;
+                }
               });
             },
             child: Obx(
               () => AnimatedSlide(
                 duration: const Duration(milliseconds: 300),
                 offset:
-                    isEnterourBusiness.value
-                        ? const Offset(0, 0)
+                    controller.isEnterBusiness.value
+                        ? Offset.zero
                         : const Offset(0, -0.05),
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 300),
-                  opacity: isEnterourBusiness.value ? 1.0 : 0.0,
+                  opacity: controller.isEnterBusiness.value ? 1.0 : 0.0,
                   child: Visibility(
-                    visible: isEnterourBusiness.value,
-                    child: submenuElements([
-                      cusText("Electronics", Colors.black, 15, FontWeight.w800),
-                      SizedBox(height: 20.h),
-                      cusText("Electrical", Colors.black, 15, FontWeight.w800),
-                      SizedBox(height: 20.h),
-                      cusText("Sub-Station", Colors.black, 15, FontWeight.w800),
-                      SizedBox(height: 20.h),
-                      cusText("Power Plant", Colors.black, 15, FontWeight.w800),
-                      SizedBox(height: 20.h),
-                      cusText(
-                        "Lab Equipment",
-                        Colors.black,
-                        15,
-                        FontWeight.w800,
-                      ),
-                      SizedBox(height: 20.h),
-                      cusText(
-                        "Lightning Resistance",
-                        Colors.black,
-                        15,
-                        FontWeight.w800,
-                      ),
-                      SizedBox(height: 20.h),
-                      cusText("IT Support", Colors.black, 15, FontWeight.w800),
-                    ], 410),
+                    visible: controller.isEnterBusiness.value,
+                    child: MouseRegion(
+                      onEnter: (_) => controller.isEnterBusiness.value = true,
+                      onExit: (_) {
+                        controller.isEnterBusiness.value = false;
+                        Future.delayed(const Duration(milliseconds: 300), () {
+                          if (!controller.isHoverBusiness.value &&
+                              !controller.isEnterBusiness.value) {
+                            controller.isEnterBusiness.value = false;
+                          }
+                        });
+                      },
+                      child: submenuElements([
+                        InkWell(
+                          onTap: () => Get.to(() => Electronics()),
+                          child: cusText(
+                            "Electronics",
+                            Colors.black,
+                            15,
+                            FontWeight.w800,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        InkWell(
+                          onTap: () => Get.to(() => Electrical()),
+                          child: cusText(
+                            "Electrical",
+                            Colors.black,
+                            15,
+                            FontWeight.w800,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        InkWell(
+                          onTap: () => Get.to(() => SubStationPage()),
+                          child: cusText(
+                            "Sub-Station",
+                            Colors.black,
+                            15,
+                            FontWeight.w800,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        InkWell(
+                          onTap: () => Get.to(() => Powerplant()),
+                          child: cusText(
+                            "Power Plant",
+                            Colors.black,
+                            15,
+                            FontWeight.w800,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        InkWell(
+                          onTap: () => Get.to(() => Labequipment()),
+                          child: cusText(
+                            "Lab Equipment",
+                            Colors.black,
+                            15,
+                            FontWeight.w800,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        cusText(
+                          "Lightning Resistance",
+                          Colors.black,
+                          15,
+                          FontWeight.w800,
+                        ),
+                        SizedBox(height: 20.h),
+                        cusText(
+                          "IT Support",
+                          Colors.black,
+                          15,
+                          FontWeight.w800,
+                        ),
+                      ], 410),
+                    ),
                   ),
                 ),
               ),
@@ -1001,58 +1115,89 @@ Widget submenu() {
         Positioned(
           left: 470.w,
           child: MouseRegion(
-            onEnter: (_) => isHoverourProducts.value = true,
+            onEnter: (_) => controller.isHoverProducts.value = true,
             onExit: (_) {
+              controller.isHoverProducts.value = false;
               Future.delayed(const Duration(milliseconds: 300), () {
-                isHoverourProducts.value = false;
-                isEnterourProducts.value = false;
+                if (!controller.isHoverProducts.value &&
+                    !controller.isEnterProducts.value) {
+                  controller.isEnterProducts.value = false;
+                }
               });
             },
             child: Obx(
               () => AnimatedSlide(
                 duration: const Duration(milliseconds: 300),
                 offset:
-                    isEnterourProducts.value
-                        ? const Offset(0, 0)
+                    controller.isEnterProducts.value
+                        ? Offset.zero
                         : const Offset(0, -0.05),
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 300),
-                  opacity: isEnterourProducts.value ? 1.0 : 0.0,
+                  opacity: controller.isEnterProducts.value ? 1.0 : 0.0,
                   child: Visibility(
-                    visible: isEnterourProducts.value,
-                    child: submenuElements([
-                      cusText(
-                        "Electronics Goods",
-                        Colors.black,
-                        15,
-                        FontWeight.w800,
-                      ),
-                      SizedBox(height: 20.h),
-                      cusText(
-                        "Electrical Goods",
-                        Colors.black,
-                        15,
-                        FontWeight.w800,
-                      ),
-                      SizedBox(height: 20.h),
-                      cusText(
-                        "Sub-Station Equipment",
-                        Colors.black,
-                        15,
-                        FontWeight.w800,
-                      ),
-                      SizedBox(height: 20.h),
-                      cusText(
-                        "Power Plant Equipment",
-                        Colors.black,
-                        15,
-                        FontWeight.w800,
-                      ),
-                      SizedBox(height: 20.h),
-                      cusText("Computer", Colors.black, 15, FontWeight.w800),
-                      SizedBox(height: 20.h),
-                      cusText("IT Support", Colors.black, 15, FontWeight.w800),
-                    ], 370),
+                    visible: controller.isEnterProducts.value,
+                    child: MouseRegion(
+                      onEnter: (_) => controller.isEnterProducts.value = true,
+                      onExit: (_) {
+                        controller.isEnterProducts.value = false;
+                        Future.delayed(const Duration(milliseconds: 300), () {
+                          if (!controller.isHoverProducts.value &&
+                              !controller.isEnterProducts.value) {
+                            controller.isEnterProducts.value = false;
+                          }
+                        });
+                      },
+                      child: submenuElements([
+                        InkWell(
+                          onTap: () => Get.to(() => ElectronicsProductPage()),
+                          child: cusText(
+                            "Electronics Goods",
+                            Colors.black,
+                            15,
+                            FontWeight.w800,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        InkWell(
+                          onTap: () => Get.to(() => ElectricalProductsPage()),
+                          child: cusText(
+                            "Electrical Goods",
+                            Colors.black,
+                            15,
+                            FontWeight.w800,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        InkWell(
+                          onTap: () => Get.to(() => PowerplantandSubsatation()),
+                          child: cusText(
+                            "Sub-Station & Power Plant",
+                            Colors.black,
+                            15,
+                            FontWeight.w800,
+                          ),
+                        ),
+
+                        SizedBox(height: 20.h),
+                        InkWell(
+                          onTap: () => Get.to(() => ComputerPage()),
+                          child: cusText(
+                            "Computer",
+                            Colors.black,
+                            15,
+                            FontWeight.w800,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        cusText(
+                          "IT Support",
+                          Colors.black,
+                          15,
+                          FontWeight.w800,
+                        ),
+                      ], 330),
+                    ),
                   ),
                 ),
               ),
@@ -1061,5 +1206,1258 @@ Widget submenu() {
         ),
       ],
     ),
+  );
+}
+
+Widget brandImageCard(String imageUrl, {void Function()? onTap}) {
+  final RxBool isHovering = false.obs;
+
+  return Obx(
+    () => MouseRegion(
+      onEnter: (_) => isHovering.value = true,
+      onExit: (_) => isHovering.value = false,
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          margin: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color:
+                    isHovering.value
+                        ? Colors.blue.withOpacity(0.2)
+                        : Colors.black12,
+                blurRadius: 10,
+                offset: Offset(0, 5),
+              ),
+            ],
+            border: Border.all(
+              color: isHovering.value ? Colors.blueAccent : Colors.transparent,
+              width: 1.5,
+            ),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(
+              imageUrl,
+              height: 100,
+              width: 100,
+              fit: BoxFit.contain,
+              errorBuilder:
+                  (context, error, stackTrace) =>
+                      Icon(Icons.broken_image, color: Colors.red),
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(child: CircularProgressIndicator());
+              },
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget contactUsForm() {
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController nameCtrl = TextEditingController();
+  final TextEditingController phoneCtrl = TextEditingController();
+  final TextEditingController emailCtrl = TextEditingController();
+
+  return StatefulBuilder(
+    builder: (context, setState) {
+      final primaryColor = Color(0xFF007C3E);
+
+      void submitForm() {
+        if (formKey.currentState!.validate()) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Thank you, your message has been sent!',
+                style: TextStyle(fontSize: 18.sp),
+              ),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 3),
+            ),
+          );
+
+          formKey.currentState!.reset();
+          nameCtrl.clear();
+          phoneCtrl.clear();
+          emailCtrl.clear();
+        }
+      }
+
+      return Form(
+        key: formKey,
+        child: Container(
+          color: Colors.white,
+          padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 40.h),
+          width: 800.w,
+          child: Column(
+            children: [
+              Text(
+                'Contact Us',
+                style: TextStyle(
+                  fontSize: 36.sp,
+                  fontWeight: FontWeight.bold,
+                  color: primaryColor,
+                ),
+              ),
+              SizedBox(height: 30.h),
+
+              TextFormField(
+                controller: nameCtrl,
+                decoration: InputDecoration(
+                  labelText: 'Name *',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  prefixIcon: Icon(Icons.person),
+                ),
+                style: TextStyle(fontSize: 18.sp),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Name is required';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 20.h),
+
+              TextFormField(
+                controller: phoneCtrl,
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                  labelText: 'Phone *',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  prefixIcon: Icon(Icons.phone),
+                ),
+                style: TextStyle(fontSize: 18.sp),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Phone number is required';
+                  }
+                  if (!RegExp(r'^\+?[\d\s\-]{7,15}$').hasMatch(value.trim())) {
+                    return 'Enter a valid phone number';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 20.h),
+
+              TextFormField(
+                controller: emailCtrl,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  labelText: 'Email *',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  prefixIcon: Icon(Icons.email),
+                ),
+                style: TextStyle(fontSize: 18.sp),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Email is required';
+                  }
+                  if (!RegExp(
+                    r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$',
+                  ).hasMatch(value.trim())) {
+                    return 'Enter a valid email address';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 30.h),
+
+              ElevatedButton(
+                onPressed: submitForm,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                ),
+                child: Text(
+                  'Send Message',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Widget expertise() {
+  return SizedBox(
+    height: 500.h,
+    width: double.infinity,
+    child: Stack(
+      children: [
+        SizedBox(
+          height: 500.h,
+          width: double.infinity,
+          child: Image.network(
+            "https://i.ibb.co/3Y7fXFNS/countdownimage.jpg",
+            fit: BoxFit.cover,
+            errorBuilder:
+                (context, error, stackTrace) =>
+                    Icon(Icons.broken_image, color: Colors.red),
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
+        ),
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(color: green.withOpacity(0.8)),
+          ),
+        ),
+        Positioned.fill(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              cusText("OUR KEY-ASPECTS", Colors.white, 32, FontWeight.bold),
+              SizedBox(height: 35.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  expertiseContainer(
+                    Icons.people_sharp,
+                    "Rich Experience",
+                    "We have been manufacturing elevators for 12 years, have strong R&D and manufacturing capabilities, and know the preferences of customers around the world.",
+                  ),
+                  expertiseContainer(
+                    Icons.engineering,
+                    "Professional Engineering",
+                    "With 12 years’ experience, we specialize in elevator systems with advanced R&D, precision manufacturing, and global customer insight.",
+                  ),
+                  expertiseContainer(
+                    Icons.money_outlined,
+                    "Competitive Pricing",
+                    "We offer high-quality elevator solutions at competitive prices, ensuring exceptional value without compromising on performance or safety.",
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget expertiseContainer(IconData icons, String title, String des) {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 15.w),
+    child: SizedBox(
+      height: 300.h,
+      width: 450.w,
+      child: Column(
+        children: [
+          Icon(icons, size: 90.r, color: Colors.white),
+          SizedBox(height: 20.h),
+          cusText(title, Colors.white, 25, FontWeight.w700),
+          SizedBox(height: 15.h),
+          Text(
+            des,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget ourAdvantage() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Flexible(
+        flex: 3,
+        child: SizedBox(
+          height: 550.h,
+          width: 700.w,
+          child: Image.network(
+            "https://i.ibb.co/D31PVtf/choose-us.webp",
+            errorBuilder:
+                (context, error, stackTrace) =>
+                    Icon(Icons.broken_image, color: Colors.red),
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
+        ),
+      ),
+
+      Flexible(
+        flex: 2,
+        child: Column(
+          children: [
+            serviceBullet(
+              'Proven Track Record Across Industrial and Utility Projects',
+            ),
+            serviceBullet('Use of Advanced Tools and Technology'),
+            serviceBullet(
+              'On-Time Project Delivery with Zero Compromise on Quality',
+            ),
+            serviceBullet('Compliance with Local and International Standards'),
+            serviceBullet('Comprehensive After-Sales Support'),
+            serviceBullet(
+              'Strong Focus on Safety and Environmental Responsibility',
+            ),
+            serviceBullet(
+              'Flexible and Scalable Solutions Tailored to Client Needs',
+            ),
+            serviceBullet('Certified Engineers and Technicians'),
+            serviceBullet(
+              'Cost-Effective Solutions Without Compromising Quality',
+            ),
+            serviceBullet('End-to-End Project Management Expertise'),
+          ],
+        ),
+      ),
+    ],
+  );
+}
+
+final List<Map<String, String>> teamMembers = [
+  {
+    'name': 'Md. Shahed',
+    'position': 'Chief Executive Officer',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=400&q=80',
+  },
+  {
+    'name': 'Nusrat Jahan',
+    'position': 'Chief Technology Officer',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=400&q=80',
+  },
+  {
+    'name': 'Tanvir Hasan',
+    'position': 'Head of Power Systems',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=400&q=80',
+  },
+  {
+    'name': 'Hafsa Alam',
+    'position': 'Lead Electronics Engineer',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
+  },
+  {
+    'name': 'Rafiul Islam',
+    'position': 'Software Architect',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
+  },
+  {
+    'name': 'Sadia Kabir',
+    'position': 'Quality Assurance Manager',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?auto=format&fit=crop&w=400&q=80',
+  },
+];
+
+Widget buildTeamSection() {
+  return Padding(
+    padding: const EdgeInsets.all(32),
+    child: Wrap(
+      alignment: WrapAlignment.center,
+      spacing: 24,
+      runSpacing: 24,
+      children:
+          teamMembers.map((member) {
+            return buildTeamCard(
+              name: member['name']!,
+              position: member['position']!,
+              imageUrl: member['imageUrl']!,
+            );
+          }).toList(),
+    ),
+  );
+}
+
+Widget buildTeamCard({
+  required String name,
+  required String position,
+  required String imageUrl,
+}) {
+  return SizedBox(
+    width: 220,
+    height: 320,
+    child: Material(
+      elevation: 4,
+      borderRadius: BorderRadius.circular(16),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        children: [
+          Expanded(
+            child: Ink.image(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  position,
+                  style: const TextStyle(fontSize: 13, color: Colors.grey),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+final List<Map<String, dynamic>> services = [
+  {'title': 'Electrical Products', 'icon': Icons.electrical_services},
+  {'title': 'Electronics Products', 'icon': Icons.memory},
+  {'title': 'Computer Lab Setup', 'icon': Icons.computer},
+  {'title': 'Substation Business', 'icon': Icons.precision_manufacturing},
+  {'title': 'Power Plant Business', 'icon': Icons.bolt},
+  {'title': 'Industrial Solutions', 'icon': Icons.factory},
+];
+
+Widget buildOurServicesSection() {
+  return SizedBox(
+    width: 1300.w,
+    child: Padding(
+      padding: EdgeInsets.symmetric(vertical: 60.h, horizontal: 24.w),
+      child: Wrap(
+        spacing: 80.w,
+        runSpacing: 80.h,
+        alignment: WrapAlignment.center,
+        children:
+            services.map((service) {
+              return buildServiceItem(
+                iconData: service['icon'],
+                title: service['title'],
+              );
+            }).toList(),
+      ),
+    ),
+  );
+}
+
+Widget buildServiceItem({required IconData iconData, required String title}) {
+  return SizedBox(
+    width: 300.w,
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 100.w,
+          height: 100.h,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: const Color(0xFF27AE60),
+          ),
+          child: Icon(iconData, color: Colors.white, size: 30.sp),
+        ),
+        SizedBox(width: 16.w),
+        Expanded(
+          child: Text(
+            title,
+            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+final List<Map<String, dynamic>> ourbrandList = [
+  {"title": "Hisense", "url": "https://i.ibb.co/KtMBLFx/hisense.png"},
+  {"title": "Haier", "url": "https://i.ibb.co/cKRvN1g0/ha.png"},
+  {"title": "Entergy Plus", "url": "https://i.ibb.co/ksB4yR0v/energy.png"},
+  {"title": "SparkL", "url": "https://i.ibb.co/67P15Lsy/sparkl.png"},
+  {"title": "CMM", "url": "https://i.ibb.co/r2BxwNmp/cmm.png"},
+  {"title": "Fuji HD", "url": "https://i.ibb.co/YThQFVBL/fujihd.png"},
+  {"title": "Golden TV", "url": "https://i.ibb.co/Xf80zknC/golden.png"},
+  {"title": "Sony", "url": "https://i.ibb.co/35gXkkh4/sony.png"},
+  {"title": "Media", "url": "https://i.ibb.co/KxVdy4nh/media.png"},
+  {"title": "General", "url": "https://i.ibb.co/RGzw48Xw/general.png"},
+  {"title": "Cool IT", "url": "https://i.ibb.co/s9f4vqvD/coolit.png"},
+  {"title": "Perkins", "url": "https://i.ibb.co/rGk49Wqx/perkins.png"},
+  {"title": "Ricardo", "url": "https://i.ibb.co/ymQ75tXN/ricardo.png"},
+  {"title": "CGM", "url": "https://i.ibb.co/Rp8cBJV8/cgm.png"},
+];
+
+Widget ourBrands() {
+  return SizedBox(
+    width: 1300.w,
+    child: Padding(
+      padding: EdgeInsets.symmetric(vertical: 60.h, horizontal: 24.w),
+      child: Wrap(
+        spacing: 80.w,
+        runSpacing: 80.h,
+        alignment: WrapAlignment.center,
+        children:
+            ourbrandList.map((service) {
+              return ourBrandItem(url: service['url'], title: service['title']);
+            }).toList(),
+      ),
+    ),
+  );
+}
+
+Widget ourBrandItem({required String url, required String title}) {
+  return SizedBox(width: 159.w, height: 150.h, child: Image.network(url));
+}
+
+final List<Map<String, dynamic>> boardMembers = [
+  {
+    'name': 'Alice Johnson',
+    'designation': 'Chairperson',
+    'image':
+        'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Benjamin Patel',
+    'designation': 'Managing Director',
+    'image':
+        'https://images.unsplash.com/photo-1566753323558-f4e0952af115?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Catherine Lee',
+    'designation': 'Finance Director',
+    'image':
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'David Kim',
+    'designation': 'Operations Director',
+    'image':
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Emily García',
+    'designation': 'Marketing Director',
+    'image':
+        'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Farhan Ahmed',
+    'designation': 'Technology Director',
+    'image':
+        'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Grace Thompson',
+    'designation': 'Human Resources',
+    'image':
+        'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Henry Scott',
+    'designation': 'Legal Advisor',
+    'image':
+        'https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Isabella Khan',
+    'designation': 'Strategy Officer',
+    'image':
+        'https://images.unsplash.com/photo-1507120410856-1f35574c3b45?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'James Wilson',
+    'designation': 'Logistics Head',
+    'image':
+        'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Karen Adams',
+    'designation': 'Public Relations',
+    'image':
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Leo Park',
+    'designation': 'Innovation Lead',
+    'image':
+        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Maria Gomez',
+    'designation': 'Client Relations',
+    'image':
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Nathan Brooks',
+    'designation': 'Procurement Head',
+    'image':
+        'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Olivia Chen',
+    'designation': 'Compliance Manager',
+    'image':
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Paul Richards',
+    'designation': 'Investor Relations',
+    'image':
+        'https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Quinn Parker',
+    'designation': 'CSR Director',
+    'image':
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Rita Shah',
+    'designation': 'Training & Development Head',
+    'image':
+        'https://images.unsplash.com/photo-1544717302-de2939b7ef71?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Samuel Ibrahim',
+    'designation': 'Data & Analytics',
+    'image':
+        'https://images.unsplash.com/photo-1573497491208-6b1acb260507?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    'name': 'Tania Moore',
+    'designation': 'Sustainability Officer',
+    'image':
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80',
+  },
+];
+
+Widget buildDirectorCard({
+  required String name,
+  required String designation,
+  required String imageUrl,
+}) {
+  return SizedBox(
+    width: 260.w,
+    child: Card(
+      elevation: 10,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+      shadowColor: const Color.fromARGB(31, 5, 5, 5),
+      child: Padding(
+        padding: EdgeInsets.all(16.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Profile Picture
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100.r),
+              child: Image.network(
+                imageUrl,
+                width: 100.w,
+                height: 100.w,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 14.h),
+
+            // Name
+            Text(
+              name,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
+                color: const Color(0xFF2C3E50),
+              ),
+            ),
+            SizedBox(height: 6.h),
+
+            // Designation
+            Text(
+              designation,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey[700],
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget header() {
+  return Column(
+    children: [
+      Text(
+        'Powering Progress, Empowering People',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 32.sp,
+          fontWeight: FontWeight.bold,
+          color: green,
+        ),
+      ),
+      const SizedBox(height: 12),
+      SizedBox(
+        width: 760.w,
+        child: Text(
+          'Vision Alliance Ltd. delivers mission‑critical electrical & electronic infrastructure for government projects across Bangladesh while diversifying into power generation, land development and cutting‑edge IT services.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 16.sp,
+            height: 1.6.h,
+            color: const Color(0xFF333333),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget speechCard({
+  required String title,
+  required String imageUrl,
+  required String speech,
+  bool reverse = false,
+}) {
+  final children = <Widget>[
+    Expanded(
+      flex: 4,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: AspectRatio(
+          aspectRatio: 3 / 3,
+          child: Image.network(imageUrl, fit: BoxFit.cover),
+        ),
+      ),
+    ),
+    SizedBox(width: 32.w),
+    Expanded(
+      flex: 6,
+      child: Column(
+        crossAxisAlignment:
+            reverse ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 26.sp,
+              fontWeight: FontWeight.w700,
+              color: green,
+            ),
+          ),
+          SizedBox(height: 12.sp),
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFFE4F7F1),
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            padding: EdgeInsets.all(24.r),
+            child: Text(
+              speech,
+              textAlign: reverse ? TextAlign.right : TextAlign.left,
+              style: TextStyle(
+                fontSize: 16.sp,
+                height: 1.8.h,
+                color: const Color(0xFF2C2C2C),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  ];
+
+  return LayoutBuilder(
+    builder: (context, constraints) {
+      if (constraints.maxWidth < 800.h) {
+        return Column(
+          children: reverse ? children.reversed.toList() : children,
+        );
+      }
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: reverse ? children.reversed.toList() : children,
+      );
+    },
+  );
+}
+
+Widget vmvHeader() {
+  return Column(
+    children: [
+      Text(
+        'Vision • Mission • Values',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 32.sp,
+          fontWeight: FontWeight.bold,
+          color: green,
+        ),
+      ),
+      SizedBox(height: 25.h),
+      SizedBox(
+        width: 810.h,
+        child: Text(
+          'Our strategic compass defines where we aspire to be, how we will get there, and the principles that guide every step.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 21.sp,
+            height: 1.6.h,
+            color: const Color(0xFF333333),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget serviceHeader() {
+  return Column(
+    children: [
+      Text(
+        'OUR • SERVICE',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 32.sp,
+          fontWeight: FontWeight.bold,
+          color: green,
+        ),
+      ),
+      SizedBox(height: 25.h),
+      SizedBox(
+        width: 1150.w,
+        child: Text(
+          'Our strategic compass defines not just where we aspire to be, but also how we intend to get there—and most importantly, the core values and principles that shape our every move. It serves as the guiding framework for Vision Alliance Ltd.’s long-term growth, innovation, and national contribution. We envision a future where we are Bangladesh’s most trusted name in sustainable energy, land development, and technology. To reach that destination, we follow a disciplined roadmap built on collaboration, excellence, and integrity. Our actions are driven by purpose and responsibility, ensuring that each decision contributes to long-lasting impact and shared progress. This strategic vision aligns our people, partners, and projects under one unified mission for national development and empowerment.',
+          textAlign: TextAlign.justify,
+          style: TextStyle(
+            fontSize: 19.sp,
+            height: 1.9.h,
+            color: const Color.fromARGB(255, 26, 25, 25),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget vmvCard({
+  required String title,
+  required IconData icon,
+  required String description,
+}) {
+  return Container(
+    decoration: BoxDecoration(
+      color: const Color(0xFFE4F7F1),
+      borderRadius: BorderRadius.circular(16.r),
+    ),
+    padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 40.h),
+    child: LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < 600.w) {
+          return Column(
+            children: vmvCardChildren(title, icon, description, true),
+          );
+        }
+        return Row(children: vmvCardChildren(title, icon, description, false));
+      },
+    ),
+  );
+}
+
+List<Widget> vmvCardChildren(
+  String title,
+  IconData icon,
+  String description,
+  bool isVertical,
+) {
+  return [
+    CircleAvatar(
+      radius: 70.r,
+      backgroundColor: green,
+      child: Icon(icon, size: 50.r, color: Colors.white),
+    ),
+    SizedBox(width: isVertical ? 0 : 40.w, height: isVertical ? 30.h : 0),
+    Expanded(
+      child: Column(
+        crossAxisAlignment:
+            isVertical ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 24.sp,
+              fontWeight: FontWeight.bold,
+              color: green,
+            ),
+          ),
+          SizedBox(height: 12.h),
+          Text(
+            description,
+            style: TextStyle(
+              wordSpacing: 5,
+              fontSize: 20.sp,
+              height: 1.9.h,
+              color: const Color(0xFF2C2C2C),
+            ),
+          ),
+        ],
+      ),
+    ),
+  ];
+}
+
+final List<Map<String, dynamic>> ourserVicelist = [
+  {
+    'title': 'Electrical Products',
+    'icon': Icons.electrical_services,
+    'imageUrl': 'https://i.ibb.co/KcB7F23Y/p3.jpg',
+    'description':
+        'Our Electrical Products division delivers reliable, high-performance solutions that power homes, industries, and public infrastructure. From circuit breakers, switchboards, and wiring systems to transformers and relays, we source and install certified equipment to ensure national safety compliance and operational efficiency. We are committed to electrifying progress across Bangladesh.',
+  },
+  {
+    'title': 'Electronics Products',
+    'icon': Icons.memory,
+    'imageUrl':
+        'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
+    'description':
+        'We provide cutting-edge electronics from globally trusted brands—offering LED TVs, smart devices, air conditioners, refrigerators, and professional systems. Whether it’s enhancing homes or digitizing government spaces, our electronics are built for comfort, performance, and energy efficiency.',
+  },
+  {
+    'title': 'Computer Lab Setup',
+    'icon': Icons.computer,
+    'imageUrl': 'https://i.ibb.co/zVSjP7Qt/digital-lab.webp',
+    'description':
+        'Our Computer Lab Setup service transforms classrooms and corporate environments into future-ready digital spaces. We design and deploy computer labs with branded hardware, ergonomic furniture, smart networking, and secure backup solutions. Ideal for government, education, and vocational sectors.',
+  },
+  {
+    'title': 'Substation Business',
+    'icon': Icons.precision_manufacturing,
+    'imageUrl': 'https://i.ibb.co/MkGv9L3D/pexels-life-of-pix-2391.jpg',
+    'description':
+        'Our substation business ensures seamless transmission of electricity through turnkey engineering, procurement, and construction services. We build substations with advanced SCADA systems, protective relays, and GIS technologies, playing a vital role in stabilizing the national power grid.',
+  },
+  {
+    'title': 'Power Plant Business',
+    'icon': Icons.bolt,
+    'imageUrl': 'https://i.ibb.co/j9ytf25K/powerplan.webp',
+    'description':
+        'We lead comprehensive power plant development—from feasibility study to commissioning. Our expertise lies in conventional and renewable energy plants, delivering scalable, eco-friendly power solutions that support Bangladesh’s energy independence and sustainability goals.',
+  }, 
+ 
+];
+
+
+
+Widget ourServicesPage() {
+  return SizedBox(
+    width: 1300.w,
+    child: Padding(padding: EdgeInsets.all(20.r),
+    child: Wrap(
+      alignment: WrapAlignment.center,
+      spacing: 80.h,
+      children: ourserVicelist.map((e){
+        return Container(
+          color: Colors.green.shade100,
+          margin: EdgeInsets.all(20.r),
+          child: Row(children: [
+            Padding(
+              padding:  EdgeInsets.all(30.0.r),
+              child: SizedBox(
+              
+                width: 400.w,
+                height: 350.h,
+                        
+                child: Image.network(
+                                  e["imageUrl"],
+                                  fit: BoxFit.cover,
+                                  errorBuilder:
+                                      (context, error, stackTrace) => Icon(
+                                        Icons.broken_image,
+                                        color: Colors.red,
+                                      ),
+                                  loadingBuilder: (
+                                    context,
+                                    child,
+                                    loadingProgress,
+                                  ) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  },
+                                )),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(e["icon"], color: green, size: 70.r
+                ,),
+              cusText(e["title"], green, 25, FontWeight.bold),
+              SizedBox(height: 15.h,),
+              SizedBox(
+                width: 740.w,
+                child: cusText(e["description"], Colors.black, 16, FontWeight.w600))
+            ],)
+          ],)
+        );
+      }).toList(),
+    ),
+    )
+  );
+}
+
+
+final List<Map<String, String>> projects = [
+  {
+    "title": "LT Panel Supply to DPDC",
+    "category": "Electrical",
+    "description": "Supplied LT panels to DPDC under government contract.",
+    "image": "https://images.unsplash.com/photo-1581090700227-1e8d6c8b1e3b"
+  },
+  {
+    "title": "School Electrical Wiring",
+    "category": "Electrical",
+    "description": "Full electrical rewiring of rural government school.",
+    "image": "https://images.unsplash.com/photo-1581090701350-d1f98dcdc10f"
+  },
+  {
+    "title": "Transformer Delivery to Rural Areas",
+    "category": "Electrical",
+    "description": "Delivered 5MVA transformers to remote substations.",
+    "image": "https://images.unsplash.com/photo-1610231031075-d1bd2f9b5c57"
+  },
+  {
+    "title": "MCC Panel for Public Hospitals",
+    "category": "Electrical",
+    "description": "Provided MCC panels to public sector hospitals.",
+    "image": "https://images.unsplash.com/photo-1600873106371-f4c7e0ea8f2c"
+  },
+  {
+    "title": "Switchgear Tender Delivery",
+    "category": "Electrical",
+    "description": "Delivered switchgears via public tender contract.",
+    "image": "https://images.unsplash.com/photo-1630502311125-8b6cc77603e9"
+  },
+  {
+    "title": "20MW Diesel Power Plant",
+    "category": "Powerplant",
+    "description": "Installed 20MW diesel power plant in Rangpur.",
+    "image": "https://images.unsplash.com/photo-1581090701350-d1f98dcdc10f"
+  },
+  {
+    "title": "Solar Hybrid Power Setup",
+    "category": "Powerplant",
+    "description": "Solar + diesel hybrid setup in remote villages.",
+    "image": "https://images.unsplash.com/photo-1610231031075-d1bd2f9b5c57"
+  },
+  {
+    "title": "Turnkey Plant in Rajshahi",
+    "category": "Powerplant",
+    "description": "EPC turnkey powerplant built in Rajshahi.",
+    "image": "https://images.unsplash.com/photo-1600873106371-f4c7e0ea8f2c"
+  },
+  {
+    "title": "GIS Generator Room Installation",
+    "category": "Powerplant",
+    "description": "Setup GIS generator control room facility.",
+    "image": "https://images.unsplash.com/photo-1599423300746-b62533397364"
+  },
+  {
+    "title": "SCADA System Integration",
+    "category": "Powerplant",
+    "description": "Integrated SCADA into 10 plant stations.",
+    "image": "https://images.unsplash.com/photo-1630502311125-8b6cc77603e9"
+  },
+  {
+    "title": "33/11KV Textile Substation",
+    "category": "Substation",
+    "description": "Built 33/11KV textile substation in Savar.",
+    "image": "https://images.unsplash.com/photo-1581090700227-1e8d6c8b1e3b"
+  },
+  {
+    "title": "VCB Installation at City Grid",
+    "category": "Substation",
+    "description": "VCB panels installed in capital city substation.",
+    "image": "https://images.unsplash.com/photo-1581090701350-d1f98dcdc10f"
+  },
+  {
+    "title": "College Substation Revamp",
+    "category": "Substation",
+    "description": "Reconstructed substation at national college.",
+    "image": "https://images.unsplash.com/photo-1610231031075-d1bd2f9b5c57"
+  },
+  {
+    "title": "ICT Lab in Polytechnic",
+    "category": "Computer Lab",
+    "description": "Setup ICT lab with 30 PCs in polytechnic.",
+    "image": "https://images.unsplash.com/photo-1581093588401-83b4d1a23d15"
+  },
+  {
+    "title": "Smart Classroom Equipment",
+    "category": "Computer Lab",
+    "description": "Supplied smart classroom interactive boards.",
+    "image": "https://images.unsplash.com/photo-1600873106371-f4c7e0ea8f2c"
+  },
+  {
+    "title": "Cybersecurity Lab Delivery",
+    "category": "Computer Lab",
+    "description": "Installed cybersecurity practice lab setup.",
+    "image": "https://images.unsplash.com/photo-1599423300746-b62533397364"
+  },
+  {
+    "title": "RO System for Hospital",
+    "category": "Water Purifier",
+    "description": "Installed RO units in 3 govt hospitals.",
+    "image": "https://images.unsplash.com/photo-1630502311125-8b6cc77603e9"
+  },
+  {
+    "title": "Solar Water Purifier Unit",
+    "category": "Water Purifier",
+    "description": "Solar-powered purifier installed in chars.",
+    "image": "https://images.unsplash.com/photo-1581090700227-1e8d6c8b1e3b"
+  },
+  {
+    "title": "Hostel Filter Installation",
+    "category": "Water Purifier",
+    "description": "Water filter units in student hostels.",
+    "image": "https://images.unsplash.com/photo-1581090701350-d1f98dcdc10f"
+  },
+  {
+    "title": "Water Lab in Campus",
+    "category": "Water Purifier",
+    "description": "Built water quality testing lab in campus.",
+    "image": "https://images.unsplash.com/photo-1610231031075-d1bd2f9b5c57"
+  }
+];
+
+
+
+
+Widget projectCard(Map<String, String> project) {
+  return MouseRegion(
+    cursor: SystemMouseCursors.click,
+    child: AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      width: 320,
+      height: 280,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10,
+            offset: Offset(2, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+            child: Image.network(
+              project["image"]!,
+              width: 320,
+              height: 150,
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => const Icon(Icons.broken_image, size: 150),
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Container(
+                  width: 320,
+                  height: 150,
+                  color: Colors.grey[300],
+                  child: const Center(child: CircularProgressIndicator()),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  project["category"]!,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.green[700],
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  project["title"]!,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  project["description"]!,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: Colors.black54),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+
+Widget showProtfolio (){
+  return  SizedBox(
+    width: 1200.w,
+    child: Wrap(
+          spacing: 20,
+          runSpacing: 20,
+          children: projects.map((project) => projectCard(project)).toList(),
+        ),
   );
 }

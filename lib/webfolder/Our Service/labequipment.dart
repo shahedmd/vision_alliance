@@ -3,16 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vision_alliance/webfolder/F.B%20getxcontroller/getxControllerFB.dart';
 
-Widget electrical(
+Widget computer(
   BuildContext context,
   GetxControllerForfirebase getxController,
 ) {
   return Obx(() {
-    if (getxController.oSelectricalbool.value) {
+    if (getxController.oSlabequipmentbool.value) {
       return Center(child: CircularProgressIndicator());
     }
 
-    if (getxController.oSelectricalProduct.isEmpty) {
+    if (getxController.oSlabequipmentProducts.isEmpty) {
       return Center(
         child: Text(
           "No products found.",
@@ -24,10 +24,11 @@ Widget electrical(
     return Padding(
       padding: EdgeInsets.all(25.0),
       child: Wrap(
+                alignment: WrapAlignment.center,
+
         spacing: 16.w,
         runSpacing: 16.h,
-        alignment: WrapAlignment.center,
-        children: getxController.oSelectricalProduct.map((product) {
+        children: getxController.oSlabequipmentProducts.map((product) {
           return _buildHoverCard(product);
         }).toList(),
       ),
@@ -36,11 +37,10 @@ Widget electrical(
 }
 
 Widget _buildHoverCard(dynamic product) {
-        bool isHovered = false;
+  bool isHovered = false;
 
   return StatefulBuilder(
     builder: (context, setState) {
-
       return MouseRegion(
         onEnter: (_) => setState(() => isHovered = true),
         onExit: (_) => setState(() => isHovered = false),
