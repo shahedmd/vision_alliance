@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -32,77 +34,80 @@ class _PowerplantandSubsatationState extends State<PowerplantandSubsatation> {
                   menubar(),
 
                   Positioned(
-                    top: 160.h,
-                    left: 160.w,
-                    right: 0.w,
-                    bottom: 0.h,
-                    child: cusText(
-                      "POWERPLANT & SUBSTATION PRODUCT",
-                      green,
-                      30,
-                      FontWeight.bold,
-                    ),
-                  ),
-
-                  Positioned(
                     top: 180.h,
-                    left: 160.w,
-                    right: 0.w,
-                    bottom: 0.h,
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 500.w,
-                              child: cusText(
-                                "We are committed to producing the best sub station and power plant products in the country, combining cutting-edge technology, innovation, and uncompromising quality. Serving both corporate and general customers, we offer a diverse range of high-performance electronic solutions designed to enhance everyday life and modern business operations. Our dedication to excellence has earned us a strong reputation for reliability, customer satisfaction, and continuous improvement. Through our corporate partnerships and retail presence, Vision Alliance continues to set new standards in the Bangladeshi electronics market — delivering smarter, more efficient, and truly world-class products made right here in Bangladesh.",
-                                Colors.grey.shade900,
-                                16,
-                                FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(width: 100.w),
-                            SizedBox(
-                              height: 450.h,
-                              width: 550.w,
-                              child: Image.network(
-                                "https://i.ibb.co/j9ytf25K/powerplan.webp",
-                                fit: BoxFit.cover,
-                                errorBuilder:
-                                    (context, error, stackTrace) => Icon(
-                                      Icons.broken_image,
-                                      color: Colors.red,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: SizedBox(
+                      width: 1300.w,
+                      child: Column(
+                        children: [
+                          cusText("POWERPLANT & SUBSTATION PRODUCT", green, 30, FontWeight.bold),
+                          SizedBox(height: 20.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 500.w,
+                                    child: cusText(
+                                      "We are committed to producing the best sub station and power plant products in the country, combining cutting-edge technology, innovation, and uncompromising quality. Serving both corporate and general customers, we offer a diverse range of high-performance electronic solutions designed to enhance everyday life and modern business operations. Our dedication to excellence has earned us a strong reputation for reliability, customer satisfaction, and continuous improvement. Through our corporate partnerships and retail presence, Vision Alliance continues to set new standards in the Bangladeshi electronics market — delivering smarter, more efficient, and truly world-class products made right here in Bangladesh.",
+                                      Colors.grey.shade900,
+                                      16,
+                                      FontWeight.bold,
                                     ),
-                                loadingBuilder: (
-                                  context,
-                                  child,
-                                  loadingProgress,
-                                ) {
-                                  if (loadingProgress == null) return child;
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                },
+                                  ),
+                                  SizedBox(height: 25.h),
+                                  cusButton("BUY NOW", Colors.white),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: cusButton("BUY NOW", Colors.white),
-                        ),
-                      ],
+                              SizedBox(width: 100.w),
+                              SizedBox(
+                                height: 400.h,
+                                width: 550.w,
+                                child: Image.network(
+                                  "https://i.ibb.co/BHFLMPGX/productimage-removebg-preview.png",
+                                  fit: BoxFit.cover,
+                                  errorBuilder:
+                                      (context, error, stackTrace) => Icon(
+                                        Icons.broken_image,
+                                        color: Colors.red,
+                                      ),
+                                  loadingBuilder: (
+                                    context,
+                                    child,
+                                    loadingProgress,
+                                  ) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-
-                  Positioned(
+                   Positioned(
                     top: 105.h,
-                    left: 460.w,
+                    left: 0.w,
                     right: 0.w,
-                    bottom: 0.h,
-                    child: submenu(menuController),
+                    child: Center(
+                      child: SizedBox(
+                        width: 1300.w,
+                        height: 520.h,
+                        child: Padding(
+                      padding: EdgeInsets.only(left: 390.w),
+                          child: submenu(menuController),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -124,8 +129,9 @@ class _PowerplantandSubsatationState extends State<PowerplantandSubsatation> {
                 );
               }
               return SizedBox(
-                height: 1700.h,
+                width: 1400.w,
                 child: Wrap(
+                  alignment: WrapAlignment.center,
                   children:
                       getxController.powerplantandsubstationproduct.map((product) {
                         return Padding(

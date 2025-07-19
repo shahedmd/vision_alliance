@@ -43,40 +43,52 @@ class _ElectronicsState extends State<Electrical> {
                 children: [
                   menubar(),
 
-                  Positioned(
-                    top: 160.h,
-                    left: 160.w,
-                    right: 0.w,
-                    bottom: 0.h,
-                    child: cusText(
-                      "OUR ELECTRICAL BUSINESS",
-                      green,
-                      30,
-                      FontWeight.bold,
-                    ),
-                  ),
+              
 
                   Positioned(
-                    top: 180.h,
-                    left: 160.w,
+                    top: 160.h,
+                    left: 0.w,
                     right: 0.w,
-                    bottom: 0.h,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Align(
+                                                    alignment: Alignment.center,
+
+                          child: cusText(
+                                                "OUR ELECTRICAL BUSINESS",
+                                                green,
+                                                30,
+                                                FontWeight.bold,
+                                              ),
+                                              
+                        ),
+
+                        SizedBox(height: 25.h,),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
                               width: 500.w,
-                              child: cusText(
-                                "Founded in 2013, Vision Alliance is a trusted name in the electrical industry, committed to delivering world-class electronic products to both corporate and general customers. With a strong focus on quality, innovation, and customer satisfaction, we offer a wide range of advanced electronic solutions designed to meet the needs of modern life and business. Over the years, Vision Alliance has built a reputation for reliability and excellence, serving clients across diverse sectors through corporate partnerships as well as general retail sales. We continue to push boundaries in technology to provide smarter, more efficient, and high-performing products for every user.",
-                                Colors.grey.shade900,
-                                16,
-                                FontWeight.bold,
+                              child: Column(
+                                children: [
+                                  cusText(
+                                    "Founded in 2013, Vision Alliance is a trusted name in the electrical industry, committed to delivering world-class electronic products to both corporate and general customers. With a strong focus on quality, innovation, and customer satisfaction, we offer a wide range of advanced electronic solutions designed to meet the needs of modern life and business. Over the years, Vision Alliance has built a reputation for reliability and excellence, serving clients across diverse sectors through corporate partnerships as well as general retail sales. We continue to push boundaries in technology to provide smarter, more efficient, and high-performing products for every user.",
+                                    Colors.grey.shade900,
+                                    16,
+                                    FontWeight.bold,
+                                  ),
+                                  SizedBox(height: 15.h,),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: cusButton("CONTACT US", Colors.white)),
+                                ],
                               ),
                             ),
                             SizedBox(width: 100.w),
                             SizedBox(
-                              height: 450.h,
+                              height: 400.h,
                               width: 550.w,
                               child: Image.network(
                                 "https://i.ibb.co/fG40h9Qd/professionalism.jpg",
@@ -101,25 +113,30 @@ class _ElectronicsState extends State<Electrical> {
                           ],
                         ),
 
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: cusButton("CONTACT US", Colors.white),
-                        ),
+                        
                       ],
                     ),
                   ),
 
-                  Positioned(
+                   Positioned(
                     top: 105.h,
-                    left: 460.w,
+                    left: 0.w,
                     right: 0.w,
-                    bottom: 0.h,
-                    child: submenu(menuController),
+                    child: Center(
+                      child: SizedBox(
+                        width: 1300.w,
+                        height: 520.h,
+                        child: Padding(
+                      padding: EdgeInsets.only(left: 390.w),
+                          child: submenu(menuController),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-            cusText("Top Rated electrical Product", green, 40, FontWeight.bold),
+            cusText("Top Rated electrical Product", green, 30, FontWeight.bold),
             Obx(() {
               if (getxController.eletricalProductboollimit.value) {
                 return Center(child: CircularProgressIndicator());
@@ -133,8 +150,9 @@ class _ElectronicsState extends State<Electrical> {
                 );
               }
               return SizedBox(
-                height: 1300.h,
+                width: 1300.w,
                 child: Wrap(
+                  alignment: WrapAlignment.center,
                   children:
                       getxController.electricalProductslistlimit.map((product) {
                         return Padding(
@@ -252,60 +270,7 @@ class _ElectronicsState extends State<Electrical> {
 
             SizedBox(height: 60.h),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Flexible(
-                  flex: 3,
-                  child: SizedBox(
-                    height: 550.h,
-                    width: 700.w,
-                    child: Image.network(
-                      "https://i.ibb.co/D31PVtf/choose-us.webp",
-                      errorBuilder:
-                          (context, error, stackTrace) =>
-                              Icon(Icons.broken_image, color: Colors.red),
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(child: CircularProgressIndicator());
-                      },
-                    ),
-                  ),
-                ),
-
-                SizedBox(width: 30.w,),
-
-                Flexible(
-                  flex: 2,
-                  child: Column(
-                    children: [
-                      serviceBullet(
-                        'Wide Range of Electrical Products for Residential, Commercial, and Industrial Use',
-                      ),
-                      serviceBullet(
-                        'Expert Installation of Wiring, Switchgear, and Distribution Panels',
-                      ),
-                      serviceBullet(
-                        'Custom Electrical Solutions for Homes, Offices, and Factories',
-                      ),
-                      serviceBullet(
-                        'Reliable Power Backup Systems Including UPS and Generators',
-                      ),
-                      serviceBullet(
-                        'Compliant with National Electrical Codes and Safety Standards',
-                      ),
-                      serviceBullet(
-                        'Maintenance and Repair Services by Certified Electricians',
-                      ),
-                      serviceBullet(
-                        'Energy-Efficient Lighting and Automation Solutions',
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+           chooseUs(),
 
             SizedBox(height: 80.h),
 

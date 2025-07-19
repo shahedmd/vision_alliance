@@ -31,35 +31,47 @@ class _ElectronicsState extends State<Labequipment> {
                 children: [
                   menubar(),
 
-                  Positioned(
-                    top: 160.h,
-                    left: 160.w,
-                    right: 0.w,
-                    bottom: 0.h,
-                    child: cusText(
-                      "OUR LAB EQUIPMENT BUSINESS",
-                      green,
-                      30,
-                      FontWeight.bold,
-                    ),
-                  ),
+                
 
                   Positioned(
-                    top: 220.h,
-                    left: 160.w,
+                    top: 160.h,
+                    left: 0.w,
                     right: 0.w,
-                    bottom: 0.h,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Align(
+                                                    alignment: Alignment.center,
+
+                          child: cusText(
+                                                "OUR LAB EQUIPMENT BUSINESS",
+                                                green,
+                                                30,
+                                                FontWeight.bold,
+                                              ),
+                                              
+                        ),
+
+                        SizedBox(height: 25.h,),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
                               width: 500.w,
-                              child: cusText(
+                              child: Column(
+                                children: [
+                                  cusText(
                                 "Founded in 2013, Vision Alliance is a trusted name in the technology and lab equipment sector, dedicated to delivering cutting-edge digital solutions for educational institutions, research facilities, and corporate environments. Specializing in the production and setup of advanced lab equipment—including branded laptops (HP/Dell), desktops, and a full range of digital infrastructure—we provide everything needed to establish and maintain modern, high-performance digital labs. With a strong focus on quality, innovation, and customer satisfaction, Vision Alliance has built a solid reputation for reliability and technical excellence. From individual tech components to complete lab setups, we empower organizations with smart, scalable, and future-ready solutions tailored to the evolving demands of digital education and research",
                                 Colors.grey.shade900,
                                 16,
                                 FontWeight.bold,
+                              ),
+                                  SizedBox(height: 15.h,),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: cusButton("CONTACT US", Colors.white)),
+                                ],
                               ),
                             ),
                             SizedBox(width: 100.w),
@@ -89,20 +101,25 @@ class _ElectronicsState extends State<Labequipment> {
                           ],
                         ),
 
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: cusButton("CONTACT US", Colors.white),
-                        ),
+                        
                       ],
                     ),
                   ),
 
-                  Positioned(
+                   Positioned(
                     top: 105.h,
-                    left: 460.w,
+                    left: 0.w,
                     right: 0.w,
-                    bottom: 0.h,
-                    child: submenu(menuController),
+                    child: Center(
+                      child: SizedBox(
+                        width: 1300.w,
+                        height: 520.h,
+                        child: Padding(
+                      padding: EdgeInsets.only(left: 390.w),
+                          child: submenu(menuController),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -137,6 +154,7 @@ class _ElectronicsState extends State<Labequipment> {
                               borderRadius: BorderRadius.circular(15.r),
                               boxShadow: [
                                 BoxShadow(
+                                  // ignore: deprecated_member_use
                                   color: Colors.grey.withOpacity(0.4),
                                   spreadRadius: 2,
                                   blurRadius: 6,
@@ -227,57 +245,7 @@ class _ElectronicsState extends State<Labequipment> {
               ),
             ),
             SizedBox(height: 40.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Flexible(
-                  flex: 3,
-                  child: SizedBox(
-                    height: 550.h,
-                    width: 700.w,
-                    child: Image.network(
-                      "https://i.ibb.co/D31PVtf/choose-us.webp",
-                      errorBuilder:
-                          (context, error, stackTrace) =>
-                              Icon(Icons.broken_image, color: Colors.red),
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(child: CircularProgressIndicator());
-                      },
-                    ),
-                  ),
-                ),
-
-                Flexible(
-                  flex: 2,
-                  child: Column(
-                    children: [
-                      serviceBullet(
-                        'Comprehensive Setup of Computer Labs for Educational and Training Institutions',
-                      ),
-                      serviceBullet(
-                        'Installation and Configuration of PCs, Networking, and Server Systems',
-                      ),
-                      serviceBullet(
-                        'Expertise in Digital Learning Tools, Interactive Boards, and Smart Classrooms',
-                      ),
-                      serviceBullet(
-                        'Structured Cabling and Network Security with Reliable Internet Access',
-                      ),
-                      serviceBullet(
-                        'Ongoing Technical Support, Troubleshooting, and Maintenance Services',
-                      ),
-                      serviceBullet(
-                        'Adherence to Safety Protocols and Modern IT Standards',
-                      ),
-                     
-                     
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            chooseUs(),
             SizedBox(height: 120.h),
 
             bottomNavbar(),

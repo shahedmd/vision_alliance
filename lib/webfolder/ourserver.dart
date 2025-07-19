@@ -32,23 +32,31 @@ class _OurServiceState extends State<OurService> {
                       top: 200.h,
                       left: 0,
                       right: 0,
-                      child: serviceHeader(),
+                      child: serviceHeader(context),
                     ),
 
-                    Positioned(
-                      top: 105.h,
-                      left: 460.w,
-                      right: 0.w,
-                      bottom: 0.h,
-                      child: submenu(menuController),
+                     Positioned(
+                    top: 105.h,
+                    left: 0.w,
+                    right: 0.w,
+                    child: Center(
+                      child: SizedBox(
+                        width: 1300.w,
+                        height: 520.h,
+                        child: Padding(
+                      padding: EdgeInsets.only(left: 390.w),
+                          child: submenu(menuController),
+                        ),
+                      ),
                     ),
+                  ),
                   ],
                 ),
               ),
 
               SizedBox(height: 50.h,),
 
-            ourServicesPage(),
+            ourServicesPage(context),
 cusText("Our Brands", green, 35, FontWeight.bold),
               ourBrands(),
               SizedBox(height: 100.h,),

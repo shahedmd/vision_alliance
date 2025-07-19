@@ -1,10 +1,12 @@
 // ignore_for_file: deprecated_member_use
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vision_alliance/custom%20object/basicelement.dart';
 import 'package:vision_alliance/custom%20object/menuhovercontroller.dart';
+import 'package:vision_alliance/custom%20object/pdfviwer.dart';
+import 'package:vision_alliance/webfolder/vision%20user/userdatamodel.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -14,7 +16,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-    final menuController = Get.put(MenuHoverController());
+  final menuController = Get.put(MenuHoverController());
+  final pdfControler = Get.put(PdfControler());
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +30,19 @@ class _ProfileState extends State<Profile> {
               width: double.infinity,
               child: Stack(
                 children: [
-                  SizedBox(
-                    height: 1000.h,
-                    child: FadeInImage.assetNetwork(
-                      placeholder: 'assets/placeholder.jpg',
-                      image: "https://i.ibb.co/LX330Wxw/shake-hand.webp",
-                      fit: BoxFit.cover,
-                      width: double.infinity,
+                  Positioned.fill(
+                    child: SizedBox(
+                      child: Image.network(
+                        "https://i.ibb.co/LX330Wxw/shake-hand.webp",
+                        fit: BoxFit.fill,
+                        errorBuilder:
+                            (context, error, stackTrace) =>
+                                Icon(Icons.broken_image, color: Colors.red),
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(child: CircularProgressIndicator());
+                        },
+                      ),
                     ),
                   ),
                   Positioned.fill(
@@ -44,8 +53,8 @@ class _ProfileState extends State<Profile> {
                           end: Alignment.centerLeft,
                           stops: [0.0, 0.9],
                           colors: [
-                            green.withOpacity(1),
-                            green.withOpacity(0.7),
+                            Colors.black.withOpacity(1),
+                            Colors.black.withOpacity(0.7),
                           ],
                         ),
                       ),
@@ -66,30 +75,39 @@ class _ProfileState extends State<Profile> {
                           children: [
                             cusText(
                               "We Are Vision Alliance Limited",
-                              Colors.white,
+                              green,
                               50,
                               FontWeight.bold,
                             ),
+                            SizedBox(height: 15.h),
                             cusText(
                               "Empowering industries with reliable electrical and electronic solutions since 2013, Vision Alliance stands for innovation, quality, and trust. From powerplants to computer labs, we deliver the technology that drives progress. Your vision, our commitment — shaping the future with powerful, efficient, and lasting solutions built to meet tomorrow's needs.",
                               Colors.white,
-                              22,
-                              FontWeight.w700,
+                              18,
+                              FontWeight.w400,
                             ),
                             SizedBox(height: 25.h),
-                            cusButton2("Contact Us", green),
+                            cusButton2("Contact Us", green, context),
                           ],
                         ),
                       ),
                     ),
                   ),
 
-                   Positioned(
+                  Positioned(
                     top: 105.h,
-                    left: 460.w,
+                    left: 0.w,
                     right: 0.w,
-                    bottom: 0.h,
-                    child: submenu(menuController),
+                    child: Center(
+                      child: SizedBox(
+                        width: 1300.w,
+                        height: 520.h,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 390.w),
+                          child: submenu(menuController),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -135,7 +153,16 @@ class _ProfileState extends State<Profile> {
             cusText("Our Top Rated Brands", green, 35, FontWeight.bold),
             SizedBox(height: 30.h),
             ourBrands(),
+            SizedBox(height: 50.h),
+            cusText(
+              "Our Govt. Permission's & Certificate",
+              green,
+              35,
+              FontWeight.bold,
+            ),
+            SizedBox(height: 60.h),
 
+            pdfControler.showPdfvision(context),
             SizedBox(height: 120.h),
 
             bottomNavbar(),

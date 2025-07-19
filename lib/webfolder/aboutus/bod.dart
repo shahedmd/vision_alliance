@@ -79,12 +79,20 @@ class _BoDState extends State<BoD> {
                       ),
                     ),
 
-                    Positioned(
+                     Positioned(
                     top: 105.h,
-                    left: 460.w,
+                    left: 0.w,
                     right: 0.w,
-                    bottom: 0.h,
-                    child: submenu(menuController),
+                    child: Center(
+                      child: SizedBox(
+                        width: 1300.w,
+                        height: 520.h,
+                        child: Padding(
+                      padding: EdgeInsets.only(left: 390.w),
+                          child: submenu(menuController),
+                        ),
+                      ),
+                    ),
                   ),
                   ],
                 ),

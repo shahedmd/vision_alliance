@@ -1,14 +1,13 @@
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vision_alliance/firebase_options.dart';
-import 'package:vision_alliance/portfolio.dart';
-import 'package:vision_alliance/webfolder/aboutus/chairmans.dart';
-import 'package:vision_alliance/webfolder/aboutus/vmv.dart';
-import 'package:vision_alliance/webfolder/ourserver.dart';
+import 'package:vision_alliance/mobilescreen/mobile%20products/electronics.dart';
+import 'package:vision_alliance/mobilescreen/mobile%20products/electricalproducts.dart';
+import 'package:vision_alliance/mobilescreen/mobileourservice.dart';
 import 'package:vision_alliance/webfolder/webhomepage.dart';
-import './mobilescreen/mobilehomepage.dart';
 
 
 void main() async {
@@ -50,8 +49,9 @@ class _MyAppState extends State<MyApp> {
     }
     if (650 > screenWidth) {
       heightFinal = 932.0;
-      widthFinal = 430.0;
+      widthFinal = 430.0;  
     }
+
     return ScreenUtilInit(
         designSize: Size(widthFinal, heightFinal),
         minTextAdapt: false,
@@ -69,10 +69,10 @@ class _MyAppState extends State<MyApp> {
         child: LayoutBuilder(
           builder: (context, constraints) {
             if (constraints.maxWidth < 650) {
-              return const MobileHomePage();
+              return const MobileOurServicePage();
             }
 
-            return const PortfolioList();
+            return const Webhomepage();
           },
         ));
   }

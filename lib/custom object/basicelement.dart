@@ -1,6 +1,4 @@
 // ignore_for_file: deprecated_member_use, non_constant_identifier_names, avoid_print
-
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -20,6 +18,7 @@ import 'package:vision_alliance/webfolder/our%20products/computer.dart';
 import 'package:vision_alliance/webfolder/our%20products/electrical.dart';
 import 'package:vision_alliance/webfolder/our%20products/electronics.dart';
 import 'package:vision_alliance/webfolder/ourserver.dart';
+import 'package:vision_alliance/webfolder/portfolio.dart';
 import 'package:vision_alliance/webfolder/webhomepage.dart';
 import '../webfolder/F.B getxcontroller/getxControllerFB.dart';
 
@@ -133,15 +132,17 @@ Widget cusButton(String input, Color color) {
   );
 }
 
-Widget cusButton2(String input, Color color) {
+Widget cusButton2(String input, Color color, BuildContext context) {
+    bool isMobile = MediaQuery.of(context).size.width < 600;
+
   return Container(
-    height: 70.h,
+    height: isMobile? 40.h :  70.h,
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.all(Radius.circular(7.r)),
     ),
-    width: 150.w,
-    child: Center(child: cusText(input, color, 18, FontWeight.w800)),
+    width: isMobile? 100.w :  150.w,
+    child: Center(child: cusText(input, color, isMobile? 12: 18, FontWeight.w800)),
   );
 }
 
@@ -177,7 +178,8 @@ Widget menubar() {
   final controller = Get.put(MenuHoverController());
 
   return Container(
-    decoration: BoxDecoration(
+    width: double.infinity,
+ decoration: BoxDecoration(
       color: Colors.white,
       boxShadow: [
         BoxShadow(
@@ -187,69 +189,74 @@ Widget menubar() {
           offset: const Offset(0, 3),
         ),
       ],
-    ),
-    height: 130.h,
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        InkWell(
-          onTap: () => Get.to(() => Webhomepage()),
-          child: cusText(
-            "Vison Alliance LTD",
-            Colors.green,
-            22,
-            FontWeight.bold,
-          ),
+    ),    height: 130.h,
+    child: Center(
+      child: SizedBox(
+        width: 1300.w,
+        height: 130.h,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            InkWell(
+              onTap: () => Get.to(() => Webhomepage()),
+              child: cusText(
+                "Vison Alliance LTD",
+                Colors.green,
+                22,
+                FontWeight.bold,
+              ),
+            ),
+            SizedBox(width: 120.w),
+      
+            /// About Us
+            hoverMenuItem(
+              title: "About Us",
+              isEnter: controller.isEnterAbout,
+              isHover: controller.isHoverAbout,
+              onTap: () => print("About Us Clicked"),
+            ),
+            SizedBox(width: 70.w),
+      
+            /// Our Business
+            hoverMenuItem(
+              title: "Our Business",
+              isEnter: controller.isEnterBusiness,
+              isHover: controller.isHoverBusiness,
+              onTap: () => print("Our Business Clicked"),
+            ),
+            SizedBox(width: 70.w),
+      
+            InkWell(
+              onTap: () => Get.to(() => OurService()),
+              child: cusText("Our Services", Colors.black, 16, FontWeight.bold),
+            ),
+            SizedBox(width: 70.w),
+      
+            /// Our Products
+            hoverMenuItem(
+              title: "Our Products",
+              isEnter: controller.isEnterProducts,
+              isHover: controller.isHoverProducts,
+              onTap: () => print("Our Products Clicked"),
+            ),
+            SizedBox(width: 70.w),
+      
+            /// PortFolio
+            InkWell(
+              onTap: () => Get.to(() => PortfolioList()),
+              child: cusText("PortFolio", Colors.black, 16, FontWeight.bold),
+            ),
+            SizedBox(width: 70.w),
+      
+            /// Login
+            InkWell(
+              onTap: () => print("Login Clicked"),
+              child: cusText("Login", Colors.black, 16, FontWeight.bold),
+            ),
+          ],
         ),
-        SizedBox(width: 120.w),
-
-        /// About Us
-        hoverMenuItem(
-          title: "About Us",
-          isEnter: controller.isEnterAbout,
-          isHover: controller.isHoverAbout,
-          onTap: () => print("About Us Clicked"),
-        ),
-        SizedBox(width: 70.w),
-
-        /// Our Business
-        hoverMenuItem(
-          title: "Our Business",
-          isEnter: controller.isEnterBusiness,
-          isHover: controller.isHoverBusiness,
-          onTap: () => print("Our Business Clicked"),
-        ),
-        SizedBox(width: 70.w),
-
-        InkWell(
-          onTap: () => Get.to(()=> OurService()),
-          child: cusText("Our Services", Colors.black, 16, FontWeight.bold),
-        ),
-        SizedBox(width: 70.w),
-
-        /// Our Products
-        hoverMenuItem(
-          title: "Our Products",
-          isEnter: controller.isEnterProducts,
-          isHover: controller.isHoverProducts,
-          onTap: () => print("Our Products Clicked"),
-        ),
-        SizedBox(width: 70.w),
-
-        /// PortFolio
-        InkWell(
-          onTap: () => print("Portfolio Clicked"),
-          child: cusText("PortFolio", Colors.black, 16, FontWeight.bold),
-        ),
-        SizedBox(width: 70.w),
-
-        /// Login
-        InkWell(
-          onTap: () => print("Login Clicked"),
-          child: cusText("Login", Colors.black, 16, FontWeight.bold),
-        ),
-      ],
+      ),
     ),
   );
 }
@@ -286,7 +293,7 @@ Widget hoverMenuItem({
 
 Widget whychooseContainer(String title, String des, String imgUrl) {
   return Container(
-    height: 500.h,
+    padding: EdgeInsets.symmetric(vertical: 25.h),
     width: 270.w,
     decoration: BoxDecoration(
       color: Colors.white,
@@ -548,7 +555,6 @@ Widget ourProducts(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: 750.h,
                 width: 400.w,
 
                 decoration: BoxDecoration(
@@ -565,7 +571,6 @@ Widget ourProducts(
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 320.h,
                       width: 400.w,
                       child: Image.network(
                         "https://i.ibb.co/BHFLMPGX/productimage-removebg-preview.png",
@@ -596,6 +601,7 @@ Widget ourProducts(
                         FontWeight.w600,
                       ),
                     ),
+                    SizedBox(height: 10.h),
                   ],
                 ),
               ),
@@ -628,28 +634,21 @@ Widget ourProducts(
                 }
 
                 return SizedBox(
-                  height: 600.h,
                   width: 850.w,
-                  child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(context).copyWith(
-                      dragDevices: {
-                        PointerDeviceKind.touch,
-                        PointerDeviceKind.mouse,
-                      },
-                    ),
-                    child: ListView.builder(
-                      controller: productScrollController,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: getxController.productList.length,
-                      itemBuilder: (context, index) {
-                        final product = getxController.productList[index];
 
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 12.w,
-                            vertical: 20.h,
-                          ),
-                          child: Container(
+                  child: SingleChildScrollView(
+                    controller: productScrollController,
+                    scrollDirection: Axis.horizontal,
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      spacing: 20.w,
+                      runSpacing: 20.h,
+                      children: List.generate(
+                        getxController.productList.length,
+                        (index) {
+                          final product = getxController.productList[index];
+                          return Container(
+                            margin: EdgeInsets.symmetric(vertical: 15.h),
                             width: 300.w,
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -715,24 +714,27 @@ Widget ourProducts(
                                         ),
                                       ),
                                       SizedBox(height: 10.h),
-                                      Text(
-                                        product.description,
-                                        style: TextStyle(
-                                          fontSize: 16.sp,
-                                          color: Colors.grey.shade900,
+                                      SizedBox(
+                                        width: 270.w,
+                                        child: Text(
+                                          product.description,
+                                          style: TextStyle(
+                                            fontSize: 16.sp,
+                                            color: Colors.grey.shade900,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
+                                          textAlign: TextAlign.center,
                                         ),
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.center,
                                       ),
                                     ],
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 );
@@ -781,6 +783,7 @@ Widget bottomNavbar() {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: EdgeInsets.only(left: 100.w),
@@ -862,6 +865,7 @@ Widget bottomNavbar() {
         Padding(
           padding: EdgeInsets.only(left: 100.w),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
@@ -914,97 +918,96 @@ Widget submenuElements(List<Widget> widgets, double height) {
 
 Widget submenu(MenuHoverController controller) {
   return SizedBox(
-    width: double.infinity,
+    width: 700.w,
+    height: 520.h,
     child: Stack(
       children: [
-        Positioned(
-          child: MouseRegion(
-            onEnter: (_) => controller.isHoverAbout.value = true,
-            onExit: (_) {
-              controller.isHoverAbout.value = false;
-              Future.delayed(const Duration(milliseconds: 300), () {
-                if (!controller.isHoverAbout.value &&
-                    !controller.isEnterAbout.value) {
-                  controller.isEnterAbout.value = false;
-                }
-              });
-            },
-            child: Obx(
-              () => AnimatedSlide(
+        MouseRegion(
+          onEnter: (_) => controller.isHoverAbout.value = true,
+          onExit: (_) {
+            controller.isHoverAbout.value = false;
+            Future.delayed(const Duration(milliseconds: 300), () {
+              if (!controller.isHoverAbout.value &&
+                  !controller.isEnterAbout.value) {
+                controller.isEnterAbout.value = false;
+              }
+            });
+          },
+          child: Obx(
+            () => AnimatedSlide(
+              duration: const Duration(milliseconds: 300),
+              offset:
+                  controller.isEnterAbout.value
+                      ? Offset.zero
+                      : const Offset(0, -0.05),
+              child: AnimatedOpacity(
                 duration: const Duration(milliseconds: 300),
-                offset:
-                    controller.isEnterAbout.value
-                        ? Offset.zero
-                        : const Offset(0, -0.05),
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 300),
-                  opacity: controller.isEnterAbout.value ? 1.0 : 0.0,
-                  child: Visibility(
-                    visible: controller.isEnterAbout.value,
-                    child: MouseRegion(
-                      onEnter: (_) => controller.isEnterAbout.value = true,
-                      onExit: (_) {
-                        controller.isEnterAbout.value = false;
-                        Future.delayed(const Duration(milliseconds: 300), () {
-                          if (!controller.isHoverAbout.value &&
-                              !controller.isEnterAbout.value) {
-                            controller.isEnterAbout.value = false;
-                          }
-                        });
-                      },
-                      child: submenuElements([
-                        InkWell(
-                          onTap: () => Get.to(() => Profile()),
-                          child: cusText(
-                            "Company Profile",
-                            Colors.black,
-                            15,
-                            FontWeight.w800,
-                          ),
+                opacity: controller.isEnterAbout.value ? 1.0 : 0.0,
+                child: Visibility(
+                  visible: controller.isEnterAbout.value,
+                  child: MouseRegion(
+                    onEnter: (_) => controller.isEnterAbout.value = true,
+                    onExit: (_) {
+                      controller.isEnterAbout.value = false;
+                      Future.delayed(const Duration(milliseconds: 300), () {
+                        if (!controller.isHoverAbout.value &&
+                            !controller.isEnterAbout.value) {
+                          controller.isEnterAbout.value = false;
+                        }
+                      });
+                    },
+                    child: submenuElements([
+                      InkWell(
+                        onTap: () => Get.to(() => Profile()),
+                        child: cusText(
+                          "Company Profile",
+                          Colors.black,
+                          15,
+                          FontWeight.w800,
                         ),
-                        SizedBox(height: 20.h),
-                        InkWell(
-                          onTap: () => Get.to(() => BoD()),
-                          child: cusText(
-                            "Board Of Directors",
-                            Colors.black,
-                            15,
-                            FontWeight.w800,
-                          ),
+                      ),
+                      SizedBox(height: 20.h),
+                      InkWell(
+                        onTap: () => Get.to(() => BoD()),
+                        child: cusText(
+                          "Board Of Directors",
+                          Colors.black,
+                          15,
+                          FontWeight.w800,
                         ),
-                        SizedBox(height: 20.h),
-                        InkWell(
-                          onTap: () => Get.to(() => Speech()),
-
-                          child: cusText(
-                            "Chairman's Message",
-                            Colors.black,
-                            15,
-                            FontWeight.w800,
-                          ),
+                      ),
+                      SizedBox(height: 20.h),
+                      InkWell(
+                        onTap: () => Get.to(() => Speech()),
+                    
+                        child: cusText(
+                          "Chairman's Message",
+                          Colors.black,
+                          15,
+                          FontWeight.w800,
                         ),
-                        SizedBox(height: 20.h),
-                        InkWell(
-                          onTap: () => Get.to(() => VMv()),
-
-                          child: cusText(
-                            "Vision, Mission & Values",
-                            Colors.black,
-                            15,
-                            FontWeight.w800,
-                          ),
+                      ),
+                      SizedBox(height: 20.h),
+                      InkWell(
+                        onTap: () => Get.to(() => VMv()),
+                    
+                        child: cusText(
+                          "Vision, Mission & Values",
+                          Colors.black,
+                          15,
+                          FontWeight.w800,
                         ),
-                      ], 280),
-                    ),
+                      ),
+                    ], 280),
                   ),
                 ),
               ),
             ),
           ),
         ),
-
+    
         Positioned(
-          left: 142.w,
+          left : 140.w,
           child: MouseRegion(
             onEnter: (_) => controller.isHoverBusiness.value = true,
             onExit: (_) {
@@ -1097,12 +1100,7 @@ Widget submenu(MenuHoverController controller) {
                           FontWeight.w800,
                         ),
                         SizedBox(height: 20.h),
-                        cusText(
-                          "IT Support",
-                          Colors.black,
-                          15,
-                          FontWeight.w800,
-                        ),
+                        cusText("IT Support", Colors.black, 15, FontWeight.w800),
                       ], 410),
                     ),
                   ),
@@ -1111,7 +1109,7 @@ Widget submenu(MenuHoverController controller) {
             ),
           ),
         ),
-
+    
         Positioned(
           left: 470.w,
           child: MouseRegion(
@@ -1178,7 +1176,7 @@ Widget submenu(MenuHoverController controller) {
                             FontWeight.w800,
                           ),
                         ),
-
+              
                         SizedBox(height: 20.h),
                         InkWell(
                           onTap: () => Get.to(() => ComputerPage()),
@@ -1190,12 +1188,7 @@ Widget submenu(MenuHoverController controller) {
                           ),
                         ),
                         SizedBox(height: 20.h),
-                        cusText(
-                          "IT Support",
-                          Colors.black,
-                          15,
-                          FontWeight.w800,
-                        ),
+                        cusText("IT Support", Colors.black, 15, FontWeight.w800),
                       ], 330),
                     ),
                   ),
@@ -1204,6 +1197,7 @@ Widget submenu(MenuHoverController controller) {
             ),
           ),
         ),
+
       ],
     ),
   );
@@ -1296,9 +1290,20 @@ Widget contactUsForm() {
       return Form(
         key: formKey,
         child: Container(
-          color: Colors.white,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(20.r)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.08),
+                blurRadius: 10,
+                spreadRadius: 1,
+                offset: Offset(0, 4),
+              ),
+            ],
+          ),
           padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 40.h),
-          width: 800.w,
+          width: 700.w,
           child: Column(
             children: [
               Text(
@@ -1309,7 +1314,7 @@ Widget contactUsForm() {
                   color: primaryColor,
                 ),
               ),
-              SizedBox(height: 30.h),
+              SizedBox(height: 40.h),
 
               TextFormField(
                 controller: nameCtrl,
@@ -1376,7 +1381,7 @@ Widget contactUsForm() {
                   return null;
                 },
               ),
-              SizedBox(height: 30.h),
+              SizedBox(height: 45.h),
 
               ElevatedButton(
                 onPressed: submitForm,
@@ -1469,7 +1474,6 @@ Widget expertiseContainer(IconData icons, String title, String des) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 15.w),
     child: SizedBox(
-      height: 300.h,
       width: 450.w,
       child: Column(
         children: [
@@ -1514,6 +1518,8 @@ Widget ourAdvantage() {
           ),
         ),
       ),
+
+      SizedBox(width: 40.w,),
 
       Flexible(
         flex: 2,
@@ -1924,27 +1930,29 @@ Widget buildDirectorCard({
   );
 }
 
-Widget header() {
+Widget header(BuildContext context) {
+      bool isMobile = MediaQuery.of(context).size.width < 600;
+
   return Column(
     children: [
       Text(
         'Powering Progress, Empowering People',
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 32.sp,
+          fontSize: isMobile? 18.sp : 32.sp,
           fontWeight: FontWeight.bold,
           color: green,
         ),
       ),
       const SizedBox(height: 12),
       SizedBox(
-        width: 760.w,
+        width: isMobile? 400.w : 760.w,
         child: Text(
           'Vision Alliance Ltd. delivers mission‑critical electrical & electronic infrastructure for government projects across Bangladesh while diversifying into power generation, land development and cutting‑edge IT services.',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 16.sp,
-            height: 1.6.h,
+            fontSize: isMobile? 12.sp: 16.sp,
+            height: 2.h,
             color: const Color(0xFF333333),
           ),
         ),
@@ -1957,93 +1965,153 @@ Widget speechCard({
   required String title,
   required String imageUrl,
   required String speech,
-  bool reverse = false,
+  required BuildContext context,
 }) {
-  final children = <Widget>[
-    Expanded(
-      flex: 4,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: AspectRatio(
-          aspectRatio: 3 / 3,
-          child: Image.network(imageUrl, fit: BoxFit.cover),
-        ),
-      ),
-    ),
-    SizedBox(width: 32.w),
-    Expanded(
-      flex: 6,
+  bool isMobile = MediaQuery.of(context).size.width < 600;
+
+  if (isMobile) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal : 40.w, vertical: 20.h),
       child: Column(
-        crossAxisAlignment:
-            reverse ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12.r),
+            child: AspectRatio(
+              aspectRatio: 3/2, // Square for mobile
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    Icon(Icons.broken_image, color: Colors.red),
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(child: CircularProgressIndicator());
+                },
+              ),
+            ),
+          ),
+          SizedBox(height: 16.h),
           Text(
             title,
             style: TextStyle(
-              fontSize: 26.sp,
-              fontWeight: FontWeight.w700,
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
               color: green,
             ),
+            textAlign: TextAlign.center,
           ),
-          SizedBox(height: 12.sp),
+          SizedBox(height: 12.h),
           Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(16.r),
             decoration: BoxDecoration(
               color: const Color(0xFFE4F7F1),
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(10.r),
             ),
-            padding: EdgeInsets.all(24.r),
             child: Text(
               speech,
-              textAlign: reverse ? TextAlign.right : TextAlign.left,
+              textAlign: TextAlign.justify,
               style: TextStyle(
-                fontSize: 16.sp,
-                height: 1.8.h,
+                fontSize: 14.sp,
+                height: 1.8,
                 color: const Color(0xFF2C2C2C),
               ),
             ),
           ),
         ],
       ),
-    ),
-  ];
+    );
+  }
 
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      if (constraints.maxWidth < 800.h) {
-        return Column(
-          children: reverse ? children.reversed.toList() : children,
-        );
-      }
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: reverse ? children.reversed.toList() : children,
-      );
-    },
+  // Desktop Layout
+  return Padding(
+    padding: EdgeInsets.all(24.r),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 4,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: AspectRatio(
+              aspectRatio: 3 / 3,
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    Icon(Icons.broken_image, color: Colors.red),
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(child: CircularProgressIndicator());
+                },
+              ),
+            ),
+          ),
+        ),
+        SizedBox(width: 32.w),
+        Expanded(
+          flex: 6,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 26.sp,
+                  fontWeight: FontWeight.w700,
+                  color: green,
+                ),
+              ),
+              SizedBox(height: 12.sp),
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE4F7F1),
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                padding: EdgeInsets.all(24.r),
+                child: Text(
+                  speech,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    height: 3.h,
+                    color: const Color(0xFF2C2C2C),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
   );
 }
 
-Widget vmvHeader() {
+
+Widget vmvHeader(BuildContext context ) {
+    bool isMobile = MediaQuery.of(context).size.width < 600;
+
   return Column(
     children: [
       Text(
         'Vision • Mission • Values',
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 32.sp,
+          fontSize: isMobile? 20.sp :  32.sp,
           fontWeight: FontWeight.bold,
           color: green,
         ),
       ),
       SizedBox(height: 25.h),
       SizedBox(
-        width: 810.h,
+        width: isMobile ? 330.w : 810.h,
         child: Text(
           'Our strategic compass defines where we aspire to be, how we will get there, and the principles that guide every step.',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 21.sp,
-            height: 1.6.h,
+            fontSize: isMobile? 13.sp :  17.sp,
+            height: 1.9.h,
             color: const Color(0xFF333333),
           ),
         ),
@@ -2052,26 +2120,28 @@ Widget vmvHeader() {
   );
 }
 
-Widget serviceHeader() {
+Widget serviceHeader(BuildContext context) {
+      bool isMobile = MediaQuery.of(context).size.width < 600;
+
   return Column(
     children: [
       Text(
         'OUR • SERVICE',
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 32.sp,
+          fontSize: isMobile? 20.sp : 32.sp,
           fontWeight: FontWeight.bold,
           color: green,
         ),
       ),
-      SizedBox(height: 25.h),
+      SizedBox(height: isMobile ? 15.h : 25.h),
       SizedBox(
-        width: 1150.w,
+        width: isMobile ? 340.w :  1150.w,
         child: Text(
           'Our strategic compass defines not just where we aspire to be, but also how we intend to get there—and most importantly, the core values and principles that shape our every move. It serves as the guiding framework for Vision Alliance Ltd.’s long-term growth, innovation, and national contribution. We envision a future where we are Bangladesh’s most trusted name in sustainable energy, land development, and technology. To reach that destination, we follow a disciplined roadmap built on collaboration, excellence, and integrity. Our actions are driven by purpose and responsibility, ensuring that each decision contributes to long-lasting impact and shared progress. This strategic vision aligns our people, partners, and projects under one unified mission for national development and empowerment.',
           textAlign: TextAlign.justify,
           style: TextStyle(
-            fontSize: 19.sp,
+            fontSize: isMobile ? 12.sp : 19.sp,
             height: 1.9.h,
             color: const Color.fromARGB(255, 26, 25, 25),
           ),
@@ -2136,8 +2206,8 @@ List<Widget> vmvCardChildren(
             description,
             style: TextStyle(
               wordSpacing: 5,
-              fontSize: 20.sp,
-              height: 1.9.h,
+              fontSize: 17.sp,
+              height: 2.5.h,
               color: const Color(0xFF2C2C2C),
             ),
           ),
@@ -2183,281 +2253,479 @@ final List<Map<String, dynamic>> ourserVicelist = [
     'imageUrl': 'https://i.ibb.co/j9ytf25K/powerplan.webp',
     'description':
         'We lead comprehensive power plant development—from feasibility study to commissioning. Our expertise lies in conventional and renewable energy plants, delivering scalable, eco-friendly power solutions that support Bangladesh’s energy independence and sustainability goals.',
-  }, 
- 
+  },
 ];
 
+Widget ourServicesPage(BuildContext context) {
+  bool isMobile = MediaQuery.of(context).size.width < 600;
 
-
-Widget ourServicesPage() {
   return SizedBox(
-    width: 1300.w,
-    child: Padding(padding: EdgeInsets.all(20.r),
-    child: Wrap(
-      alignment: WrapAlignment.center,
-      spacing: 80.h,
-      children: ourserVicelist.map((e){
-        return Container(
-          color: Colors.green.shade100,
-          margin: EdgeInsets.all(20.r),
-          child: Row(children: [
-            Padding(
-              padding:  EdgeInsets.all(30.0.r),
-              child: SizedBox(
-              
-                width: 400.w,
-                height: 350.h,
-                        
-                child: Image.network(
-                                  e["imageUrl"],
-                                  fit: BoxFit.cover,
-                                  errorBuilder:
-                                      (context, error, stackTrace) => Icon(
-                                        Icons.broken_image,
-                                        color: Colors.red,
-                                      ),
-                                  loadingBuilder: (
-                                    context,
-                                    child,
-                                    loadingProgress,
-                                  ) {
-                                    if (loadingProgress == null) return child;
-                                    return Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  },
-                                )),
+    width: isMobile ? 410.w : 1300.w,
+    child: Padding(
+      padding: EdgeInsets.all(isMobile ? 10.r : 20.r),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: isMobile ? 15.h : 80.h,
+        runSpacing: 30.h,
+        children: ourserVicelist.map((e) {
+          return Container(
+            width: isMobile ? double.infinity : 1200.w,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20.r),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  blurRadius: 10.r,
+                  offset: Offset(0, 6),
+                ),
+              ],
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(e["icon"], color: green, size: 70.r
-                ,),
-              cusText(e["title"], green, 25, FontWeight.bold),
-              SizedBox(height: 15.h,),
-              SizedBox(
-                width: 740.w,
-                child: cusText(e["description"], Colors.black, 16, FontWeight.w600))
-            ],)
-          ],)
-        );
-      }).toList(),
+            margin: EdgeInsets.all(20.r),
+            padding: EdgeInsets.all(20.r),
+            child: isMobile
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16.r),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 230.h,
+                          child: Image.network(
+                            e["imageUrl"],
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Icon(Icons.broken_image, color: Colors.red),
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Center(child: CircularProgressIndicator());
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 15.h),
+                      Icon(e["icon"], color: green, size: 50.r),
+                      SizedBox(height: 10.h),
+                      cusText(e["title"], green, 16.sp, FontWeight.bold),
+                      SizedBox(height: 12.h),
+                      cusText(
+                        e["description"],
+                        Colors.black87,
+                        11.sp,
+                        FontWeight.w500,
+                      ),
+                    ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16.r),
+                        child: SizedBox(
+                          width: 400.w,
+                          height: 280.h,
+                          child: Image.network(
+                            e["imageUrl"],
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Icon(Icons.broken_image, color: Colors.red),
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Center(child: CircularProgressIndicator());
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 30.w),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(e["icon"], color: green, size: 60.r),
+                            SizedBox(height: 10.h),
+                            cusText(e["title"], green, 24.sp, FontWeight.bold),
+                            SizedBox(height: 18.h),
+                            cusText(
+                              e["description"],
+                              Colors.black87,
+                              15.sp,
+                              FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+          );
+        }).toList(),
+      ),
     ),
-    )
   );
 }
 
 
-final List<Map<String, String>> projects = [
+final List<Map<String, dynamic>> showProductsList = [
   {
     "title": "LT Panel Supply to DPDC",
     "category": "Electrical",
     "description": "Supplied LT panels to DPDC under government contract.",
-    "image": "https://images.unsplash.com/photo-1581090700227-1e8d6c8b1e3b"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "School Electrical Wiring",
     "category": "Electrical",
     "description": "Full electrical rewiring of rural government school.",
-    "image": "https://images.unsplash.com/photo-1581090701350-d1f98dcdc10f"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "Transformer Delivery to Rural Areas",
     "category": "Electrical",
     "description": "Delivered 5MVA transformers to remote substations.",
-    "image": "https://images.unsplash.com/photo-1610231031075-d1bd2f9b5c57"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "MCC Panel for Public Hospitals",
     "category": "Electrical",
     "description": "Provided MCC panels to public sector hospitals.",
-    "image": "https://images.unsplash.com/photo-1600873106371-f4c7e0ea8f2c"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "Switchgear Tender Delivery",
     "category": "Electrical",
     "description": "Delivered switchgears via public tender contract.",
-    "image": "https://images.unsplash.com/photo-1630502311125-8b6cc77603e9"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "20MW Diesel Power Plant",
     "category": "Powerplant",
     "description": "Installed 20MW diesel power plant in Rangpur.",
-    "image": "https://images.unsplash.com/photo-1581090701350-d1f98dcdc10f"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "Solar Hybrid Power Setup",
     "category": "Powerplant",
     "description": "Solar + diesel hybrid setup in remote villages.",
-    "image": "https://images.unsplash.com/photo-1610231031075-d1bd2f9b5c57"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "Turnkey Plant in Rajshahi",
     "category": "Powerplant",
     "description": "EPC turnkey powerplant built in Rajshahi.",
-    "image": "https://images.unsplash.com/photo-1600873106371-f4c7e0ea8f2c"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "GIS Generator Room Installation",
     "category": "Powerplant",
     "description": "Setup GIS generator control room facility.",
-    "image": "https://images.unsplash.com/photo-1599423300746-b62533397364"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "SCADA System Integration",
     "category": "Powerplant",
     "description": "Integrated SCADA into 10 plant stations.",
-    "image": "https://images.unsplash.com/photo-1630502311125-8b6cc77603e9"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "33/11KV Textile Substation",
     "category": "Substation",
     "description": "Built 33/11KV textile substation in Savar.",
-    "image": "https://images.unsplash.com/photo-1581090700227-1e8d6c8b1e3b"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "VCB Installation at City Grid",
     "category": "Substation",
     "description": "VCB panels installed in capital city substation.",
-    "image": "https://images.unsplash.com/photo-1581090701350-d1f98dcdc10f"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "College Substation Revamp",
     "category": "Substation",
     "description": "Reconstructed substation at national college.",
-    "image": "https://images.unsplash.com/photo-1610231031075-d1bd2f9b5c57"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "ICT Lab in Polytechnic",
     "category": "Computer Lab",
     "description": "Setup ICT lab with 30 PCs in polytechnic.",
-    "image": "https://images.unsplash.com/photo-1581093588401-83b4d1a23d15"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "Smart Classroom Equipment",
     "category": "Computer Lab",
     "description": "Supplied smart classroom interactive boards.",
-    "image": "https://images.unsplash.com/photo-1600873106371-f4c7e0ea8f2c"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "Cybersecurity Lab Delivery",
     "category": "Computer Lab",
     "description": "Installed cybersecurity practice lab setup.",
-    "image": "https://images.unsplash.com/photo-1599423300746-b62533397364"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "RO System for Hospital",
     "category": "Water Purifier",
     "description": "Installed RO units in 3 govt hospitals.",
-    "image": "https://images.unsplash.com/photo-1630502311125-8b6cc77603e9"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "Solar Water Purifier Unit",
     "category": "Water Purifier",
     "description": "Solar-powered purifier installed in chars.",
-    "image": "https://images.unsplash.com/photo-1581090700227-1e8d6c8b1e3b"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "Hostel Filter Installation",
     "category": "Water Purifier",
     "description": "Water filter units in student hostels.",
-    "image": "https://images.unsplash.com/photo-1581090701350-d1f98dcdc10f"
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
   },
   {
     "title": "Water Lab in Campus",
     "category": "Water Purifier",
     "description": "Built water quality testing lab in campus.",
-    "image": "https://images.unsplash.com/photo-1610231031075-d1bd2f9b5c57"
-  }
+    "image": "https://i.ibb.co/0Vs7q9k2/dp.jpg",
+  },
 ];
 
+Widget showProtfolio(BuildContext context) {
+  bool isMobile = MediaQuery.of(context).size.width < 600;
 
-
-
-Widget projectCard(Map<String, String> project) {
-  return MouseRegion(
-    cursor: SystemMouseCursors.click,
-    child: AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      width: 320,
-      height: 280,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10,
-            offset: Offset(2, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            child: Image.network(
-              project["image"]!,
-              width: 320,
-              height: 150,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => const Icon(Icons.broken_image, size: 150),
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Container(
-                  width: 320,
-                  height: 150,
-                  color: Colors.grey[300],
-                  child: const Center(child: CircularProgressIndicator()),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  project["category"]!,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.green[700],
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  project["title"]!,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  project["description"]!,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.black54),
+  return SizedBox(
+    width: isMobile ? double.infinity : 1200.w,
+    child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 10.w : 20.w),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: isMobile ? 20.w : 60.w,
+        runSpacing: 30.h,
+        children: showProductsList.map((e) {
+          return Container(
+            width: isMobile ? double.infinity : 320.w,
+            padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 10.w),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16.r),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.08),
+                  blurRadius: 12,
+                  spreadRadius: 2,
+                  offset: Offset(0, 6),
                 ),
               ],
             ),
-          ),
-        ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12.r),
+                  child: SizedBox(
+                    height: 200.h,
+                    width: double.infinity,
+                    child: Image.network(
+                      e["image"],
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) =>
+                          Icon(Icons.broken_image, color: Colors.red),
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(child: CircularProgressIndicator());
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(height: 15.h),
+                Text(
+                  e["title"],
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    color: green,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  e["category"],
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color: green.withOpacity(0.8),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 12.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.w),
+                  child: Text(
+                    e["description"],
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w400,
+                      height: 1.4,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
       ),
     ),
   );
 }
 
 
-Widget showProtfolio (){
-  return  SizedBox(
-    width: 1200.w,
-    child: Wrap(
-          spacing: 20,
-          runSpacing: 20,
-          children: projects.map((project) => projectCard(project)).toList(),
+Widget chooseUs(){
+  return SizedBox(
+                    height: 600.h,
+                    width: 1300.w,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          flex: 3,
+                          child: SizedBox(
+                            height: 550.h,
+                            width: 700.w,
+                            child: Image.network(
+                              "https://i.ibb.co/D31PVtf/choose-us.webp",
+                              errorBuilder:
+                                  (context, error, stackTrace) =>
+                                      Icon(Icons.broken_image, color: Colors.red),
+                              loadingBuilder: (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Center(child: CircularProgressIndicator());
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 30.w),
+                    
+                        Flexible(
+                          flex: 2,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              serviceBullet(
+                                'Extensive Experience in Power Plant Projects of All Scales',
+                              ),
+                              serviceBullet(
+                                'Expertise in Thermal, Gas, Diesel, and Renewable Plants',
+                              ),
+                              serviceBullet(
+                                'Timely Project Execution with Proven Operational Reliability',
+                              ),
+                              serviceBullet(
+                                'Compliance with National Grid and International Standards',
+                              ),
+                              serviceBullet(
+                                'Robust After-Commissioning Support and Maintenance',
+                              ),
+                              serviceBullet(
+                                'Dedicated to Safety, Efficiency, and Environmental Standards',
+                              ),
+                        
+                            
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+}
+
+
+
+
+Widget buildMobileTeamSection() {
+  return Padding(
+    padding: EdgeInsets.all(16.w),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: teamMembers.map((member) {
+        return Padding(
+          padding: EdgeInsets.symmetric(vertical: 12.h),
+          child: buildMobileTeamCard(
+            name: member['name']!,
+            position: member['position']!,
+            imageUrl: member['imageUrl']!,
+          ),
+        );
+      }).toList(),
+    ),
+  );
+}
+
+Widget buildMobileTeamCard({
+  required String name,
+  required String position,
+  required String imageUrl,
+}) {
+  return Container(
+    width: 300.w,
+    height: 420.h,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(16.r),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black12,
+          blurRadius: 10,
+          offset: Offset(0, 4),
         ),
+      ],
+    ),
+    child: Column(
+      children: [
+        Expanded(
+          flex: 3,
+          child: ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+            child: Image.network(
+              imageUrl,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) =>
+                  Icon(Icons.broken_image, size: 50.sp, color: Colors.red),
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(child: CircularProgressIndicator());
+              },
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Padding(
+            padding: EdgeInsets.all(12.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.sp,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  position,
+                  style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
   );
 }

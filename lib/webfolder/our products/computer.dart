@@ -1,11 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vision_alliance/custom%20object/basicelement.dart';
 import 'package:vision_alliance/custom%20object/menuhovercontroller.dart';
 import 'package:vision_alliance/webfolder/F.B%20getxcontroller/getxControllerFB.dart';
-
-
 
 class ComputerPage extends StatefulWidget {
   const ComputerPage({super.key});
@@ -33,84 +33,88 @@ class _ComputerPageState extends State<ComputerPage> {
                   menubar(),
 
                   Positioned(
-                    top: 160.h,
-                    left: 160.w,
-                    right: 0.w,
-                    bottom: 0.h,
-                    child: cusText(
-                      "COMPUTER ITEMS",
-                      green,
-                      30,
-                      FontWeight.bold,
-                    ),
-                  ),
-
-                  Positioned(
                     top: 180.h,
-                    left: 160.w,
-                    right: 0.w,
-                    bottom: 0.h,
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 500.w,
-                              child: cusText(
-                                "We are committed to producing the best Computer's products in the country, combining cutting-edge technology, innovation, and uncompromising quality. Serving both corporate and general customers, we offer a diverse range of high-performance electronic solutions designed to enhance everyday life and modern business operations. Our dedication to excellence has earned us a strong reputation for reliability, customer satisfaction, and continuous improvement. Through our corporate partnerships and retail presence, Vision Alliance continues to set new standards in the Bangladeshi electronics market — delivering smarter, more efficient, and truly world-class products made right here in Bangladesh.",
-                                Colors.grey.shade900,
-                                16,
-                                FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(width: 100.w),
-                            SizedBox(
-                              height: 450.h,
-                              width: 550.w,
-                              child: Image.network(
-                                "https://i.ibb.co/35NPynRq/c-removebg-preview.png",
-                                fit: BoxFit.cover,
-                                errorBuilder:
-                                    (context, error, stackTrace) => Icon(
-                                      Icons.broken_image,
-                                      color: Colors.red,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: SizedBox(
+                      width: 1300.w,
+                      child: Column(
+                        children: [
+                          cusText("COMPUTER ITEMS", green, 30, FontWeight.bold),
+                          SizedBox(height: 20.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 500.w,
+                                    child: cusText(
+                                      "We are committed to producing the best Computer's products in the country, combining cutting-edge technology, innovation, and uncompromising quality. Serving both corporate and general customers, we offer a diverse range of high-performance electronic solutions designed to enhance everyday life and modern business operations. Our dedication to excellence has earned us a strong reputation for reliability, customer satisfaction, and continuous improvement. Through our corporate partnerships and retail presence, Vision Alliance continues to set new standards in the Bangladeshi electronics market — delivering smarter, more efficient, and truly world-class products made right here in Bangladesh.",
+                                      Colors.grey.shade900,
+                                      16,
+                                      FontWeight.bold,
                                     ),
-                                loadingBuilder: (
-                                  context,
-                                  child,
-                                  loadingProgress,
-                                ) {
-                                  if (loadingProgress == null) return child;
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                },
+                                  ),
+                                  SizedBox(height: 25.h),
+                                  cusButton("BUY NOW", Colors.white),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: cusButton("BUY NOW", Colors.white),
-                        ),
-                      ],
+                              SizedBox(width: 100.w),
+                              SizedBox(
+                                height: 400.h,
+                                width: 550.w,
+                                child: Image.network(
+                                  "https://i.ibb.co/35NPynRq/c-removebg-preview.png",
+                                  fit: BoxFit.cover,
+                                  errorBuilder:
+                                      (context, error, stackTrace) => Icon(
+                                        Icons.broken_image,
+                                        color: Colors.red,
+                                      ),
+                                  loadingBuilder: (
+                                    context,
+                                    child,
+                                    loadingProgress,
+                                  ) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
 
                   Positioned(
                     top: 105.h,
-                    left: 460.w,
+                    left: 0.w,
                     right: 0.w,
-                    bottom: 0.h,
-                    child: submenu(menuController),
+                    child: Center(
+                      child: SizedBox(
+                        width: 1300.w,
+                        height: 520.h,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 390.w),
+                          child: submenu(menuController),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
 
             cusText("Vision's Top Rated Items", green, 35, FontWeight.bold),
-            SizedBox(height: 30.h,),
+            SizedBox(height: 30.h),
 
             Obx(() {
               if (getxController.computerbool.value) {
@@ -125,8 +129,10 @@ class _ComputerPageState extends State<ComputerPage> {
                 );
               }
               return SizedBox(
-                height: 1700.h,
+                width: 1400.w,
                 child: Wrap(
+                  alignment: WrapAlignment.center,
+
                   children:
                       getxController.computerProdut.map((product) {
                         return Padding(
@@ -201,8 +207,8 @@ class _ComputerPageState extends State<ComputerPage> {
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.center,
                                       ),
-                                      SizedBox(height: 20.h,),
-                                      cusButton("Buy Now", Colors.white)
+                                      SizedBox(height: 20.h),
+                                      cusButton("Buy Now", Colors.white),
                                     ],
                                   ),
                                 ),
@@ -214,7 +220,7 @@ class _ComputerPageState extends State<ComputerPage> {
                 ),
               );
             }),
-            SizedBox(height: 120.h,),
+            SizedBox(height: 120.h),
             expertise(),
 
             SizedBox(height: 100.h),

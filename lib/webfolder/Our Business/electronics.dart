@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -43,40 +45,52 @@ class _ElectronicsState extends State<Electronics> {
                 children: [
                   menubar(),
 
-                  Positioned(
-                    top: 160.h,
-                    left: 160.w,
-                    right: 0.w,
-                    bottom: 0.h,
-                    child: cusText(
-                      "OUR ELECTRONICS BUSINESS",
-                      green,
-                      30,
-                      FontWeight.bold,
-                    ),
-                  ),
+                  
 
                   Positioned(
-                    top: 180.h,
-                    left: 160.w,
+                    top: 160.h,
+                    left: 0.w,
                     right: 0.w,
-                    bottom: 0.h,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Align(
+                                                    alignment: Alignment.center,
+
+                          child: cusText(
+                                                "OUR ELECTRONICS BUSINESS",
+                                                green,
+                                                30,
+                                                FontWeight.bold,
+                                              ),
+                                              
+                        ),
+
+                        SizedBox(height: 25.h,),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
                               width: 500.w,
-                              child: cusText(
+                              child: Column(
+                                children: [
+                                  cusText(
                                 "Founded in 2013, Vision Alliance is a trusted name in the electronics industry, committed to delivering world-class electronic products to both corporate and general customers. With a strong focus on quality, innovation, and customer satisfaction, we offer a wide range of advanced electronic solutions designed to meet the needs of modern life and business. Over the years, Vision Alliance has built a reputation for reliability and excellence, serving clients across diverse sectors through corporate partnerships as well as general retail sales. We continue to push boundaries in technology to provide smarter, more efficient, and high-performing products for every user.",
                                 Colors.grey.shade900,
                                 16,
                                 FontWeight.bold,
                               ),
+                                  SizedBox(height: 15.h,),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: cusButton("CONTACT US", Colors.white)),
+                                ],
+                              ),
                             ),
                             SizedBox(width: 100.w),
                             SizedBox(
-                              height: 450.h,
+                              height: 400.h,
                               width: 550.w,
                               child: Image.network(
                                 "https://i.ibb.co/KcB7F23Y/p3.jpg",
@@ -101,20 +115,25 @@ class _ElectronicsState extends State<Electronics> {
                           ],
                         ),
 
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: cusButton("CONTACT US", Colors.white),
-                        ),
+                        
                       ],
                     ),
                   ),
 
-                  Positioned(
+                   Positioned(
                     top: 105.h,
-                    left: 460.w,
+                    left: 0.w,
                     right: 0.w,
-                    bottom: 0.h,
-                    child: submenu(menuController),
+                    child: Center(
+                      child: SizedBox(
+                        width: 1300.w,
+                        height: 520.h,
+                        child: Padding(
+                      padding: EdgeInsets.only(left: 390.w),
+                          child: submenu(menuController),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -138,7 +157,7 @@ class _ElectronicsState extends State<Electronics> {
                 );
               }
               return SizedBox(
-                height: 1300.h,
+                width: 1400.w,
                 child: Wrap(
                   children:
                       getxController.electronicsProductslistLimit.map((product) {
@@ -246,61 +265,7 @@ class _ElectronicsState extends State<Electronics> {
 
             SizedBox(height: 60.h),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Flexible(
-                  flex: 3,
-                  child: SizedBox(
-                    height: 550.h,
-                    width: 700.w,
-                    child: Image.network(
-                      "https://i.ibb.co/D31PVtf/choose-us.webp",
-                      errorBuilder:
-                          (context, error, stackTrace) =>
-                              Icon(Icons.broken_image, color: Colors.red),
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(child: CircularProgressIndicator());
-                      },
-                    ),
-                  ),
-                ),
-
-                SizedBox(width: 30.w,),
-
-                Flexible(
-                  flex: 2,
-                  child: Column(
-                    children: [
-                      serviceBullet(
-                        'Wide Selection of Electronics for Home, Office, and Industrial Use',
-                      ),
-                      serviceBullet(
-                        'Sales and Support for TVs, Computers, Printers, and Smart Devices',
-                      ),
-                      serviceBullet(
-                        'Professional Installation and Configuration Services',
-                      ),
-                      serviceBullet(
-                        'Repair and Maintenance for a Variety of Electronic Equipment',
-                      ),
-                      serviceBullet(
-                        'Genuine Products with Warranty and After-Sales Support',
-                      ),
-                      serviceBullet(
-                        'Custom Solutions for Surveillance, Networking, and Automation',
-                      ),
-                      serviceBullet(
-                        'Expert Technicians with Hands-On Experience in Electronics',
-                      ),
-                     
-                    ],
-                  ),
-                ),
-              ],
-            ),
+           chooseUs(),
 
             SizedBox(height: 80.h),
 

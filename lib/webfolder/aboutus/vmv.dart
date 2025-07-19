@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vision_alliance/custom%20object/basicelement.dart';
 import 'package:vision_alliance/custom%20object/menuhovercontroller.dart';
@@ -36,17 +35,25 @@ class _VMvState extends State<VMv> {
                       child: SizedBox(
                         height: 300.h,
                         child: Column(children: [
-                          vmvHeader()
+                          vmvHeader(context)
                         ]),
                       ),
                     ),
 
-                   Positioned(
+                    Positioned(
                     top: 105.h,
-                    left: 460.w,
+                    left: 0.w,
                     right: 0.w,
-                    bottom: 0.h,
-                    child: submenu(menuController),
+                    child: Center(
+                      child: SizedBox(
+                        width: 1300.w,
+                        height: 520.h,
+                        child: Padding(
+                      padding: EdgeInsets.only(left: 390.w),
+                          child: submenu(menuController),
+                        ),
+                      ),
+                    ),
                   ),
                   ],
                 ),

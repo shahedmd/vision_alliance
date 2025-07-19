@@ -27,7 +27,7 @@ class SubStationPage extends StatelessWidget {
           children: [
             SizedBox(
               width: double.infinity,
-              height: 1400.h,
+              height: 1250.h,
               child: Stack(
                 children: [
                   menubar(),
@@ -139,12 +139,20 @@ class SubStationPage extends StatelessWidget {
                     ),
                   ),
 
-                  Positioned(
+                   Positioned(
                     top: 105.h,
-                    left: 460.w,
+                    left: 0.w,
                     right: 0.w,
-                    bottom: 0.h,
-                    child: submenu(menuController),
+                    child: Center(
+                      child: SizedBox(
+                        width: 1300.w,
+                        height: 520.h,
+                        child: Padding(
+                      padding: EdgeInsets.only(left: 390.w),
+                          child: submenu(menuController),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -159,59 +167,7 @@ class SubStationPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 40.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Flexible(
-                  flex: 3,
-                  child: SizedBox(
-                    height: 550.h,
-                    width: 700.w,
-                    child: Image.network(
-                      "https://i.ibb.co/D31PVtf/choose-us.webp",
-                      errorBuilder:
-                          (context, error, stackTrace) =>
-                              Icon(Icons.broken_image, color: Colors.red),
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(child: CircularProgressIndicator());
-                      },
-                    ),
-                  ),
-                ),
-
-                Flexible(
-                  flex: 2,
-                  child: Column(
-                    children: [
-                      serviceBullet(
-                        'Proven Track Record Across Industrial and Utility Projects',
-                      ),
-                      serviceBullet('Use of Advanced Tools and Technology'),
-                      serviceBullet(
-                        'On-Time Project Delivery with Zero Compromise on Quality',
-                      ),
-                      serviceBullet(
-                        'Compliance with Local and International Standards',
-                      ),
-                      serviceBullet('Comprehensive After-Sales Support'),
-                      serviceBullet(
-                        'Strong Focus on Safety and Environmental Responsibility',
-                      ),
-                      serviceBullet(
-                        'Flexible and Scalable Solutions Tailored to Client Needs',
-                      ),
-                      serviceBullet('Certified Engineers and Technicians'),
-                      serviceBullet(
-                        'Cost-Effective Solutions Without Compromising Quality',
-                      ),
-                      serviceBullet('End-to-End Project Management Expertise'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+           chooseUs(),
 
             SizedBox(height: 40.h),
             Container(
@@ -243,7 +199,7 @@ class SubStationPage extends StatelessWidget {
 
                   SizedBox(width: 200.w),
 
-                  cusButton2("Contact Us", green),
+                  cusButton2("Contact Us", green, context),
                 ],
               ),
             ),
